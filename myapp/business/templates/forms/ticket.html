@@ -1,0 +1,46 @@
+{% extends 'parent/base.html' %}
+{% block title %}Ticket form{% endblock %}
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+   نام و نام خانوادگی:
+    <input type="text" name="name" required
+        {% if form.name.value %}value = "{{ form.name.value }}"{% endif %}>
+    <br>
+   شماره تلفن:
+    <input type="text" name="phone" required
+        {% if form.phone.value %}value="{{ form.phone.value }}" {% endif %}>
+{#        <span>{{ form.phone.errors }}</span>#}
+    <br>
+    ایمیل:
+    <input type="email" name="email" required
+        {% if form.email.value %}value="{{ form.email.value }}" {% endif %}>
+    <br>
+    متن تیکت:
+        <textarea name="message">{% if form.message.value %}{{ form.message.value }}{% endif %}</textarea>
+    <br>
+    <select name="subject">
+        <option value="پیشنهاد"
+                {% if form.subject.value == 'پیشنهاد' %}selected{% endif %}>پیشنهادات</option>
+        <option value="انتقاد"
+                {% if form.subject.value == 'انتقاد' %}selected{% endif %}>انتقادات</option>
+        <option value="گزارش"
+                {% if form.subject.value == 'گزارش' %}selected{% endif %}>گزارش ها</option>
+    </select>
+    <br>
+        <input type="submit" value="ثبت تیکت">
+
+    {% if form.errors %}
+        <br>
+        لطفن خطاهای زیر را اصلاح کنید!
+        <br>
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ field.label }}: {{ error }} <br>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    </form>
+{% endblock %}

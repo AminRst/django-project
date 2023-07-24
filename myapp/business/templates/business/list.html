@@ -1,0 +1,24 @@
+{% extends 'parent/base.html' %}
+{% block title %}cafe list{% endblock %}
+{% block content %}
+    <h1>Cafe list</h1>
+    <a class="filter" href="{% url 'business:cafe_list' %}">All</a>
+    <br>
+    <a class="filter" href="{%  url 'business:open' %}">Open</a>
+    <br>
+    <a class="filter" href="{% url 'business:close' %}">Close</a>
+
+    <ol style="--length: {{ cafes | length }}" role="list">
+    {% for cafe in cafes %}
+        <li style="--i: {{ forloop.counter }}">
+        <h3>
+        <a href="{% url 'business:cafe_detail' cafe.id %}">{{ cafe.name }}</a>
+        </h3>
+        <p>{{ cafe.description | truncatewords:5 }}</p>
+        </li>
+    {% endfor %}
+    </ol>
+    {% include 'partials/pagination.html' with page=page_obj %}
+
+
+{% endblock %}
