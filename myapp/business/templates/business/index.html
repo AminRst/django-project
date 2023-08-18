@@ -1,0 +1,17 @@
+{% extends 'parent/base.html' %}
+{% block title %}Statistics{% endblock %}
+{% load cafe_tags %}
+{% block content %}
+    <h2>آمار سایت</h2>
+    <a href="{% url 'business:cafe_status' 'open_cafe' %}">تعداد کافی شاپ های باز: {% total_open_cafes %}</a>
+    <p>تعداد کامنت ها: {% total_comments %}</p>
+    <p>تاریخ ثبت آخرین کافی شاپ باز: {% last_cafe_date %}</p>
+    {% last_cafes %}
+    <h2>محبوب ترین کافه ها</h2>
+    {% most_popular_cafes as pop_cafes %}
+    {% for cafes in pop_cafes %}
+        <br>
+        <a href="{{ cafes.get_absolute_url }}">{{ cafes.name }}: with {{ cafes.comment_count }} comment
+            {{ cafes.comment_count | pluralize }}</a>
+    {% endfor %}
+{% endblock %}

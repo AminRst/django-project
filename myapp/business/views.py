@@ -1,15 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, request
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST
+from django.views.generic.edit import FormView
+from django.views.generic.base import TemplateView
+from django.urls import reverse_lazy
 from .models import *
 from .forms import *
+from .urls import *
 
 
 # Create your views here.
 def index(request):
-    return HttpResponse('index')
+    return render(request, 'business/index.html')
 
 
 # def cafe_list(request):
@@ -28,31 +32,41 @@ def index(request):
 #     return render (request, 'business/list.html', context)
 
 class CafeListView(ListView):
-    queryset = Cafe.objects.all()
+    def get_queryset(self):
+        status = self.kwargs.get('status')
+        if status == "open_cafe":
+            queryset = Cafe.opened.all()
+            return queryset
+        if status == "close_cafe":
+            queryset = Cafe.objects.exclude(status='OP')
+            return queryset
+        else:
+            queryset = Cafe.objects.all()
+            return queryset
+
     context_object_name = 'cafes'
-    paginate_by = 4
+    paginate_by = 10
     template_name = 'Business/list.html'
 
-
-class OpenCafesListView(ListView):
-    queryset = Cafe.opened.all()
-    context_object_name = 'cafes'
-    paginate_by = 2
-    template_name = 'Business/list.html'
-
-
-class CloseCafesListView(ListView):
-    queryset = Cafe.objects.exclude(status=Cafe.Status.OPEN)
-    context_object_name = 'cafes'
-    paginate_by = 2
-    template_name = 'Business/list.html'
 
 def cafe_detail(request, id):
     cafe = get_object_or_404(Cafe, id=id, status=Cafe.Status.OPEN)
+    comments = cafe.comments.filter(active=True)
+    form = CommentForm()
+    context = {
+        'cafe': cafe,
+        'form': form,
+        'comments': comments
+    }
+    return render(request, 'business/detail.html', context)
+
+
+def out_of_service(request, id):
+    cafe = get_object_or_404(Cafe, id=id, status=Cafe.Status.CLOSE)
     context = {
         'cafe': cafe
     }
-    return render(request, 'business/detail.html', context)
+    return render(request, 'partials/out_of_service.html', context)
 
 
 # class CafeDetailView(DetailView):
@@ -82,7 +96,7 @@ def ticket(request):
 def cafe_comment(request, cafe_id):
     cafe = get_object_or_404(Cafe, id=cafe_id, status=Cafe.Status.OPEN)
     comment = None
-    form = CommentForm(data=require_POST)
+    form = CommentForm(data=request.POST)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.cafe = cafe
@@ -93,4 +107,40 @@ def cafe_comment(request, cafe_id):
         'comment': comment,
     }
     return render(request, 'forms/comment.html', context)
+
+
+class ContactUsView(FormView):
+    form_class = ContactUsForm
+    template_name = 'forms/contact_us.html'
+    success_url = '/business/success/'
+
+    def form_valid(self, form):
+        user = form.save()
+        return super(ContactUsView, self).form_valid(form)
+
+
+class SuccessView(TemplateView):
+    template_name = 'forms/success.html'
+
+
+def city_view(request):
+    if request.method == 'POST':
+        form = CitiesForm(request.POST)
+        if request.POST['city'] == 'SH':
+            cafes = Cafe.opened.filter(city=Cafe.Cities.SHIRAZ)
+            # cafe = get_object_or_404(Cafe, city=Cafe.Cities.SHIRAZ, status=Cafe.Status.OPEN)
+        elif request.POST['city'] == 'NY':
+            cafes = Cafe.opened.filter(city=Cafe.Cities.NEWYORK)
+            # cafe = get_object_or_404(Cafe, city=Cafe.Cities.NEWYORK, status=Cafe.Status.OPEN)
+        elif request.POST['city'] == 'MN':
+            cafes = Cafe.opened.filter(city=Cafe.Cities.MANCHESTER)
+            # cafe = get_object_or_404(Cafe, city=Cafe.Cities.MANCHESTER, status=Cafe.Status.OPEN)
+        context = {
+            'form': form,
+            'cafes': cafes
+        }
+        return render(request, 'partials/city_cafes.html', context)
+    else:
+        form = CitiesForm()
+        return render(request, 'forms/list_of_cities.html', {'form': form})
 

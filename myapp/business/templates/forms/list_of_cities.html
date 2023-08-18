@@ -1,0 +1,10 @@
+{% extends 'parent/base.html' %}
+{% block title %}List of cities{% endblock %}
+{% load cafe_tags %}
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+        {{ form.city }}
+        <input type="submit" value="جستجو بر اساس نام شهر">
+</form>
+{% endblock %}

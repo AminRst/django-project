@@ -1,0 +1,7 @@
+{% extends 'parent/base.html' %}
+{% block title %}Out of service{% endblock %}
+{% load cafe_tags %}
+{% block content %}
+       <h2>    فعلن در دسترس نمی باشد {{ cafe.name }} کافه  </h2>
+         <a href="{% url 'business:cafe_list' %}">بازگشت به کافه ها</a>
+{% endblock %}

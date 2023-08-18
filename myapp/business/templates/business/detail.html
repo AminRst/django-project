@@ -1,9 +1,33 @@
 {% extends 'parent/base.html' %}
-{% block title %}cafe detail{% endblock %}
+{% block title %}Cafe Detail{% endblock %}
+{% load cafe_tags %}
 {% block content %}
     <h1>Cafe detail</h1>
-    <h2>{{ cafe.name }} (manage by {{ cafe.manager }})</h2>
-    <p>{{ cafe.description | linebreaks }}</p>
+        <h2>{{ cafe.name }} ( by {{ cafe.manager }})</h2>
+        <hr>
+        <p>{{ cafe.description | markdown }}</p>
+        <hr>
+        <p>{{ cafe.city }}</p>
     <hr>
     <p>{{ cafe.publish }}</p>
+    <div>
+    {% with comments.count as cm_count %}
+        {{ cm_count }} comment {{ cm_count | pluralize }}
+    </div>
+    <div>
+        {% for cm in comments %}
+            {{ cm.body | linebreaks }}
+            <br>
+            {{ cm.name }}
+            {% empty %}
+            کامنتی وجود ندارد!
+        {% endfor %}
+    </div>
+    {% endwith %}
+
+    <form method="POST" action="{% url 'business:cafe_comment' cafe.id %}">
+       {% csrf_token %}
+       {{ form.as_p }}
+       <input type="submit" value="افزودن کامنت">
+    </form>
 {% endblock %}

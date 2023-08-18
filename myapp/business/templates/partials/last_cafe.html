@@ -1,0 +1,8 @@
+{% load jformat %}
+<div>
+    <h2>آخرین کافه های باز ثبت شده</h2>
+    {% for cafe in l_cafes %}
+        <p><a href="{{ cafe.get_absolute_url }}">{{ cafe.name }}</a><br>
+            تاریخ ثبت: {{ cafe.publish|jformat:"%Y/%m/%d-%H:%M" }}</p>
+    {% endfor %}
+</div>

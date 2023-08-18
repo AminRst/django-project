@@ -6,10 +6,17 @@ urlpatterns = [
     path('', views.index, name='index'),
     # path('cafe/', views.cafe_list, name='cafe_list'),
     path('cafes/', views.CafeListView.as_view(), name='cafe_list'),
+    # path('cafes/<str:close_cafe>/', views.CafeListView.as_view(), name='cafe_close'),
     path('cafe/<int:id>', views.cafe_detail, name='cafe_detail'),
     # path('cafe/<pk>', views.CafeDetailView.as_view(), name='cafe_detail'),
     path('ticket/', views.ticket, name='ticket'),
-    path('open_cafes/', views.OpenCafesListView.as_view(), name='open'),
-    path('close_cafes/', views.CloseCafesListView.as_view(), name='close')
+    path('cafes/<str:status>', views.CafeListView.as_view(), name='cafe_status'),
+    path('contact_us/', views.ContactUsView.as_view(), name='contact_us'),
+    path('success/', views.SuccessView.as_view(), name='success'),
+    path('cafes/<cafe_id>/comment', views.cafe_comment, name='cafe_comment'),
+    path('cafe/out_of_service/<int:id>', views.out_of_service, name='out_of_service'),
+    path('city_cafes/', views.city_view, name='city_cafes')
+
+
 
 ]

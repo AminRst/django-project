@@ -106,8 +106,24 @@ h3::before {
 	border-radius: 5px;
 
 }
-.filter:hover, .filter:active {
-  background-color: green;
+.filter:hover, .filter:active{
+  background-color: seagreen;
+  color: white;
+}
+
+.home:link, .home:visited{
+	background-color: white;
+  color: black;
+  border: 2px solid green;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+	width: 220px;
+	border-radius: 5px;
+}
+.home:hover, .home:active{
+	background-color: seagreen;
   color: white;
 }
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django_jalali.db import models as jmodels
@@ -12,6 +13,11 @@ class OpenManager(models.Manager):
 
 # Create your models here.
 class Cafe(models.Model):
+    class Cities(models.TextChoices):
+        SHIRAZ = 'SH', 'SHIRAZ'
+        NEWYORK = 'NY', 'NEWYORK'
+        MANCHESTER = 'MN', 'MANCHESTER'
+
     class Status(models.TextChoices):
         OPEN = 'OP', 'Open'
         CLOSE = 'CL', 'Close'
@@ -23,6 +29,7 @@ class Cafe(models.Model):
     description = models.TextField()
     slug = models.SlugField(max_length=250)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.CLOSE)
+    city = models.CharField(max_length=25, choices=Cities.choices, default=Cities.SHIRAZ)
     address = models.CharField(max_length=100)
     # data
     publish = models.DateTimeField(default=timezone.now)
@@ -43,6 +50,9 @@ class Cafe(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('business:cafe_detail', args=[self.id])
+
 
 class Ticket(models.Model):
     message = models.TextField(verbose_name='پیام')
@@ -60,10 +70,10 @@ class Ticket(models.Model):
 
 
 class Comment(models.Model):
-    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE, related_name="comment", verbose_name="پست")
+    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE, related_name="comments", verbose_name="کافه")
     name = models.CharField(max_length=250, verbose_name="نام")
     body = models.TextField(verbose_name="متن کامنت")
-    created = jmodels.jDateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
     active = models.BooleanField(default=False, verbose_name="وضعیت")
 
     class Meta:
@@ -76,5 +86,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.name}: {self.cafe}'
+
+
+class ContactUs(models.Model):
+    name = models.CharField(blank=True, max_length=250, verbose_name='نام و نام خانوادگی')
+    email = models.EmailField(verbose_name='ایمیل آدرس')
+    message = models.TextField(verbose_name='متن پیام')
+
+    class Meta:
+        verbose_name = 'پیام های کاربر'
+        verbose_name_plural = 'پیام های کاربران'
+
+    def __str__(self):
+        return f'{self.name}'
 
 

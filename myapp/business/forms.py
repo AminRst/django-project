@@ -1,5 +1,7 @@
 from django import forms
-from .models import Comment
+from django.forms import Textarea
+
+from .models import *
 
 
 class TicketForm(forms.Form):
@@ -9,7 +11,7 @@ class TicketForm(forms.Form):
         ('گزارش', 'گزارش')
     )
 
-    message = forms.CharField(widget=forms.Textarea, required=True)
+    message = forms.CharField(widget=forms.Textarea, required=False)
     name = forms.CharField(max_length=250, required=True)
     email = forms.EmailField()
     phone = forms.CharField(max_length=11, required=True)
@@ -32,6 +34,36 @@ class TicketForm(forms.Form):
 
 
 class CommentForm(forms.ModelForm):
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if name:
+            if len(name) < 3:
+                raise forms.ValidationError('نام کوتاه است')
+            else:
+                return name
+
     class Meta:
         model = Comment
         fields = ['name', 'body']
+
+
+# class ContactUsForm(forms.Form):
+
+
+class ContactUsForm(forms.ModelForm):
+    class Meta:
+        model = ContactUs
+        fields = ['name', 'email', 'message']
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if name:
+            return name
+        else:
+            raise forms.ValidationError('نام و نام خانوادگی را وارد کنید!!!')
+
+
+class CitiesForm(forms.ModelForm):
+    class Meta:
+        model = Cafe
+        fields = ['city']
