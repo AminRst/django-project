@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404, request
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.postgres.search import TrigramSimilarity
 from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
@@ -45,7 +46,7 @@ class CafeListView(ListView):
             return queryset
 
     context_object_name = 'cafes'
-    paginate_by = 10
+    paginate_by = 5
     template_name = 'Business/list.html'
 
 
@@ -111,7 +112,7 @@ def cafe_comment(request, cafe_id):
 
 class ContactUsView(FormView):
     form_class = ContactUsForm
-    template_name = 'forms/contact_us.html'
+    template_name = 'forms/contact-us.html'
     success_url = '/business/success/'
 
     def form_valid(self, form):
@@ -120,11 +121,12 @@ class ContactUsView(FormView):
 
 
 class SuccessView(TemplateView):
-    template_name = 'forms/success.html'
+    template_name = 'forms/contact-us.html'
 
 
 def city_view(request):
     if request.method == 'POST':
+        cafes = []
         form = CitiesForm(request.POST)
         if request.POST['city'] == 'SH':
             cafes = Cafe.opened.filter(city=Cafe.Cities.SHIRAZ)
@@ -144,3 +146,30 @@ def city_view(request):
         form = CitiesForm()
         return render(request, 'forms/list_of_cities.html', {'form': form})
 
+
+def cafe_search(request):
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(data=request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results1 = (Cafe.opened.annotate(similarity=TrigramSimilarity('name', query))
+                        .filter(similarity__gt=0.1))
+            results2 = (Cafe.opened.annotate(similarity=TrigramSimilarity('description', query))
+                        .filter(similarity__gt=0.1))
+            results = (results1 | results2).order_by('-similarity')
+    context = {
+        'query': query,
+        'results': results
+    }
+    return render(request, 'business/page-search-results.html', context)
+
+
+# def image(request):
+#     data = Image.objects.all()
+#     print()
+#     context = {
+#         'data': data
+#     }
+#     return render(request, "business/list.html", context)

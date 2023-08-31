@@ -29,7 +29,7 @@ def last_cafe_date():
 
 
 @register.simple_tag
-def most_popular_cafes(count=5):
+def most_popular_cafes(count=6):
     return Cafe.opened.annotate(comment_count=Count('comments')).order_by('-comment_count')[:count]
 
 

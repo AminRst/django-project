@@ -101,3 +101,20 @@ class ContactUs(models.Model):
         return f'{self.name}'
 
 
+class Image(models.Model):
+    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE, related_name='images', verbose_name='تصویر')
+    image_file = models.ImageField(upload_to='cafe_images/')
+    title = models.CharField(max_length=20, verbose_name='عنوان', null=True, blank=True)
+    description = models.TextField(verbose_name='توضیحات', null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title if self.title else 'None'
+
+    class Meta:
+        ordering = ['created']
+        indexes = [
+            models.Index(fields=['created'])
+        ]
+        verbose_name = 'تصویر'
+        verbose_name_plural = 'تصویر ها'
