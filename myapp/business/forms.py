@@ -67,3 +67,7 @@ class CitiesForm(forms.ModelForm):
     class Meta:
         model = Cafe
         fields = ['city']
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField()

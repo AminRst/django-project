@@ -35,19 +35,6 @@ class ContactUsAdmin(admin.ModelAdmin):
     list_filter = ['name', 'email']
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ['cafe', 'title', 'created']

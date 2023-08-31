@@ -15,8 +15,8 @@ urlpatterns = [
     path('success/', views.SuccessView.as_view(), name='success'),
     path('cafes/<cafe_id>/comment', views.cafe_comment, name='cafe_comment'),
     path('cafe/out_of_service/<int:id>', views.out_of_service, name='out_of_service'),
-    path('city_cafes/', views.city_view, name='city_cafes')
-
-
-
+    path('city_cafes/', views.city_view, name='city_cafes'),
+    path('search', views.cafe_search, name='cafe_search'),
+    # path('images', views.image, name='images')
 ]
+
