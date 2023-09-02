@@ -17,7 +17,7 @@ from .urls import *
 
 # Create your views here.
 def index(request):
-    return render(request, 'business/index.html')
+    return render(request, 'business/index_orgin.html')
 
 
 # def cafe_list(request):
@@ -169,6 +169,7 @@ def cafe_search(request):
     return render(request, 'business/page-search-results.html', context)
 
 
+
 # class LoginView():
     # def login(request):
     #     if request.method == 'Post':
@@ -194,3 +195,12 @@ def cafe_search(request):
 #     def form_invalid(self, form):
 #         messages.error(self.request, 'Invalid username or password')
 #         return self.render_to_response(self.get_context_data(form=form))
+
+# def image(request):
+#     data = Image.objects.all()
+#     print()
+#     context = {
+#         'data': data
+#     }
+#     return render(request, "business/list.html", context)
+
