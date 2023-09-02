@@ -6,7 +6,10 @@ from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+from django.contrib import messages
 from .models import *
 from .forms import *
 from .urls import *
@@ -166,10 +169,28 @@ def cafe_search(request):
     return render(request, 'business/page-search-results.html', context)
 
 
-# def image(request):
-#     data = Image.objects.all()
-#     print()
-#     context = {
-#         'data': data
-#     }
-#     return render(request, "business/list.html", context)
+# class LoginView():
+    # def login(request):
+    #     if request.method == 'Post':
+    #         form =
+    #     username = request.POST["username"]
+    #     password = request.POST["password"]
+    #     user = authenticate(request, username=username, password=password)
+    #     if user is not None:
+    #         login(request, user)
+    #         # Redirect to a success page.
+    #         ...
+    #     else:
+    #         # Return an 'invalid login' error message.
+    ...
+
+
+# class MyLoginView(LoginView):
+#     redirect_authenticated_user = True
+#
+#     def get_success_url(self):
+#         return reverse_lazy('tasks')
+#
+#     def form_invalid(self, form):
+#         messages.error(self.request, 'Invalid username or password')
+#         return self.render_to_response(self.get_context_data(form=form))

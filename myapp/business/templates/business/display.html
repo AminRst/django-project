@@ -1,0 +1,20 @@
+{% extends 'parent/base.html' %}
+{% block title %}display{% endblock %}
+{% block content %}
+    <body class="container " style="padding-top: 5%;">
+    <div class="row">
+        {% for x in data %}
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <a href="{{ x.photo.url }}">
+              <img src="{{ x.photo.url }}" alt="Lights" style="width:100%">
+              <div class="caption">
+                <p>{{ x.title }}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  </body>
+{% endblock %}

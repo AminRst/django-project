@@ -34,7 +34,7 @@ def most_popular_cafes(count=6):
 
 
 @register.inclusion_tag('partials/last_cafe.html')
-def last_cafes(count=2):
+def last_cafes(count=6):
     l_cafes = Cafe.opened.order_by('-publish')[:count]
     context = {
         'l_cafes': l_cafes

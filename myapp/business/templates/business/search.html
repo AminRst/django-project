@@ -1,0 +1,18 @@
+{% extends 'parent/base.html' %}
+{% block title %}List of cities{% endblock %}
+{% load cafe_tags %}
+{% block content %}
+    <br>
+   {% if query %}
+       <p  dir="rtl">برای کلمه "{{ query }}" :</p>
+       <p  dir="rtl">{{ results.count }} مورد یافت شد</p>
+       <hr class="search_hr">
+   {% endif %}
+    <br>
+    {% for cafe in results %}
+        <li class="search_li">
+        <a href="{{ cafe.get_absolute_url }}">{{ cafe.name }}</a>
+        <p>{{ cafe.description }}</p>
+        </li>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'parent/base.html' %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+<h2 align="center">تماس با ما</h2>
+    <hr>
+    <form method="post">
+    {% csrf_token %}
+       <table>
+            {{ form.as_table }}
+        </table>
+        <button type="submit">ارسال پیام</button>
+{#     {% if form.errors %}#}
+{#        <br>#}
+{#        لطفن خطاهای زیر را اصلاح کنید!#}
+{#        <br>#}
+{#        {% for field in form %}#}
+{#            {% if field.errors %}#}
+{#                {% for error in field.errors %}#}
+{#                    {{ field.label }}: {{ error }} <br>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{#    {% endif %}#}
+    </form>
+{% endblock %}
+
+
+

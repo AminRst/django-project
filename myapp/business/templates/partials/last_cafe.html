@@ -1,8 +1,118 @@
 {% load jformat %}
-<div>
-    <h2>آخرین کافه های باز ثبت شده</h2>
-    {% for cafe in l_cafes %}
-        <p><a href="{{ cafe.get_absolute_url }}">{{ cafe.name }}</a><br>
-            تاریخ ثبت: {{ cafe.publish|jformat:"%Y/%m/%d-%H:%M" }}</p>
-    {% endfor %}
-</div>
+{#        <p><a href="{{ cafe.get_absolute_url }}">{{ cafe.name }}</a><br>#}
+{#            تاریخ ثبت: {{ cafe.publish|jformat:"%Y/%m/%d-%H:%M" }}</p>#}
+<ul class="simple-post-list">
+    <li>
+        <article>
+            <div class="post-image">
+                <div class="img-thumbnail img-thumbnail-no-borders d-block">
+                    <a href="{{ l_cafes.0.get_absolute_url }}">
+                        <img src="../../static/img/blog/square/blog-64.jpg" class="border-radius-0" width="50" height="50" alt="Explained: How does VR actually work?">
+                    </a>
+                </div>
+            </div>
+            <div class="post-info">
+                <div class="post-meta">
+                    12 تیر 1399
+                </div>
+                <h4 class="font-weight-normal text-3 mb-0 primary-font line-height-8"><a href="{{ l_cafe.0.get_absolute_url }}"
+                               class="text-dark">کافه {{ l_cafes.0.name }} --> تاریخ ثبت: {{ l_cafes.0.publish|jformat:"%Y/%m/%d-%H:%M" }}</a></h4>
+            </div>
+        </article>
+    </li>
+
+    <li>
+        <article>
+            <div class="post-image">
+                <div class="img-thumbnail img-thumbnail-no-borders d-block">
+                    <a href="{{ l_cafes.1.get_absolute_url }}">
+                        <img src="../../static/img/blog/square/blog-65.jpg" class="border-radius-0" width="50" height="50" alt="Main Reasons To Stop Texting And Driving">
+                    </a>
+                </div>
+            </div>
+            <div class="post-info">
+                <div class="post-meta">
+                    12 تیر 1399
+                </div>
+                <h4 class="font-weight-normal text-3 mb-0 primary-font line-height-8"><a href="{{ l_cafe.1.get_absolute_url }}"
+                               class="text-dark">کافه {{ l_cafes.1.name }} --> تاریخ ثبت: {{ l_cafes.1.publish|jformat:"%Y/%m/%d-%H:%M" }}</a></h4>
+            </div>
+        </article>
+    </li>
+
+    <li>
+        <article>
+            <div class="post-image">
+                <div class="img-thumbnail img-thumbnail-no-borders d-block">
+                    <a href="{{ l_cafes.2.get_absolute_url }}">
+                        <img src="../../static/img/blog/square/blog-66.jpg" class="border-radius-0" width="50" height="50" alt="Tips to Help You Quickly Prepare your Lunch">
+                    </a>
+                </div>
+            </div>
+            <div class="post-info">
+                <div class="post-meta">
+                    12 تیر 1399
+                </div>
+                <h4 class="font-weight-normal text-3 mb-0 primary-font line-height-8"><a href="{{ l_cafe.2.get_absolute_url }}"
+                               class="text-dark">کافه {{ l_cafes.2.name }} --> تاریخ ثبت: {{ l_cafes.2.publish|jformat:"%Y/%m/%d-%H:%M" }}</a></h4>
+            </div>
+        </article>
+    </li>
+
+    <li>
+        <article>
+            <div class="post-image">
+                <div class="img-thumbnail img-thumbnail-no-borders d-block">
+                    <a href="{{ l_cafes.2.get_absolute_url }}">
+                        <img src="../../static/img/blog/square/blog-67.jpg" class="border-radius-0" width="50" height="50" alt="Why should I buy a smartwatch?">
+                    </a>
+                </div>
+            </div>
+            <div class="post-info">
+                <div class="post-meta">
+                    12 تیر 1399
+                </div>
+                <h4 class="font-weight-normal text-3 mb-0 primary-font line-height-8"><a href="{{ l_cafe.3.get_absolute_url }}"
+                               class="text-dark">کافه {{ l_cafes.3.name }} --> تاریخ ثبت: {{ l_cafes.3.publish|jformat:"%Y/%m/%d-%H:%M" }}</a></h4>
+            </div>
+        </article>
+    </li>
+
+    <li>
+        <article>
+            <div class="post-image">
+                <div class="img-thumbnail img-thumbnail-no-borders d-block">
+                    <a href="{{ l_cafes.3.get_absolute_url }}">
+                        <img src="../../static/img/blog/square/blog-68.jpg" class="border-radius-0" width="50" height="50" alt="The best augmented reality smartglasses">
+                    </a>
+                </div>
+            </div>
+            <div class="post-info">
+                <div class="post-meta">
+                    12 تیر 1399
+                </div>
+                <h4 class="font-weight-normal text-3 mb-0 primary-font line-height-8"><a href="{{ l_cafe.4.get_absolute_url }}"
+                               class="text-dark">کافه {{ l_cafes.4.name }} --> تاریخ ثبت: {{ l_cafes.4.publish|jformat:"%Y/%m/%d-%H:%M" }}</a></h4>
+            </div>
+        </article>
+    </li>
+
+    <li>
+        <article>
+            <div class="post-image">
+                <div class="img-thumbnail img-thumbnail-no-borders d-block">
+                    <a href="{{ l_cafes.5.get_absolute_url }}">
+                        <img src="../../static/img/blog/square/blog-69.jpg" class="border-radius-0" width="50" height="50" alt="12 Healthiest Foods to Eat for Breakfast">
+                    </a>
+                </div>
+            </div>
+            <div class="post-info">
+                <div class="post-meta">
+                    12 تیر 1399
+                </div>
+                <h4 class="font-weight-normal text-3 mb-0 primary-font line-height-8"><a href="{{ l_cafe.5.get_absolute_url }}"
+                               class="text-dark">کافه {{ l_cafes.5.name }} --> تاریخ ثبت: {{ l_cafes.5.publish|jformat:"%Y/%m/%d-%H:%M" }}</a></h4>
+            </div>
+        </article>
+    </li>
+</ul>
