@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from .models import *
 from .forms import *
 from .urls import *
@@ -17,7 +18,7 @@ from .urls import *
 
 # Create your views here.
 def index(request):
-    return render(request, 'business/index_orgin.html')
+    return render(request, 'business/index.html')
 
 
 # def cafe_list(request):
@@ -62,7 +63,7 @@ def cafe_detail(request, id):
         'form': form,
         'comments': comments
     }
-    return render(request, 'business/detail.html', context)
+    return render(request, 'business/detail1.html', context)
 
 
 def out_of_service(request, id):
@@ -124,7 +125,7 @@ class ContactUsView(FormView):
 
 
 class SuccessView(TemplateView):
-    template_name = 'forms/contact-us.html'
+    template_name = 'business/index.html'
 
 
 def city_view(request):
@@ -169,32 +170,29 @@ def cafe_search(request):
     return render(request, 'business/page-search-results.html', context)
 
 
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            username = cd['username']
+            password = cd['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('business:index')
+                else:
+                    return HttpResponse('Your account is not active')
+                    # messages.error(request, 'Your account is not active')
+            else:
+                return HttpResponse('You are not logged in')
+    else:
+        form = LoginForm()
+    return render(request, 'forms/login_page1.html', {'form': form})
 
-# class LoginView():
-    # def login(request):
-    #     if request.method == 'Post':
-    #         form =
-    #     username = request.POST["username"]
-    #     password = request.POST["password"]
-    #     user = authenticate(request, username=username, password=password)
-    #     if user is not None:
-    #         login(request, user)
-    #         # Redirect to a success page.
-    #         ...
-    #     else:
-    #         # Return an 'invalid login' error message.
-    ...
 
 
-# class MyLoginView(LoginView):
-#     redirect_authenticated_user = True
-#
-#     def get_success_url(self):
-#         return reverse_lazy('tasks')
-#
-#     def form_invalid(self, form):
-#         messages.error(self.request, 'Invalid username or password')
-#         return self.render_to_response(self.get_context_data(form=form))
 
 # def image(request):
 #     data = Image.objects.all()
@@ -203,4 +201,5 @@ def cafe_search(request):
 #         'data': data
 #     }
 #     return render(request, "business/list.html", context)
+
 

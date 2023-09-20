@@ -14,13 +14,12 @@ urlpatterns = [
     path('cafes/<str:status>', views.CafeListView.as_view(), name='cafe_status'),
     path('contact_us/', views.ContactUsView.as_view(), name='contact_us'),
     path('success/', views.SuccessView.as_view(), name='success'),
-    path('cafes/<cafe_id>/comment', views.cafe_comment, name='cafe_comment'),
+    path('cafes/<cafe_id>/', views.cafe_comment, name='cafe_comment'),
     path('cafe/out_of_service/<int:id>', views.out_of_service, name='out_of_service'),
     path('city_cafes/', views.city_view, name='city_cafes'),
-    path('search', views.cafe_search, name='cafe_search'),
+    path('search/', views.cafe_search, name='cafe_search'),
     # path('images', views.image, name='images')
-    path('auth/login/', LoginView.as_view(template_name='business/login_page1.html'), name='login-user'),
-    path("auth/logout/", LogoutView.as_view(), name="logout-user")
+    path('login/', views.user_login, name='login'),
 
 ]
 

@@ -1,0 +1,39 @@
+{% extends 'parent/base.html' %}
+{% block title %}cafe list{% endblock %}
+{% load cafe_tags %}
+{% block content %}
+    <h1>Cafe list</h1>
+    <a class="filter" href="{% url 'business:cafe_list' %}">All</a>
+    <br>
+    <a class="filter" href="{%  url 'business:cafe_status' 'open_cafe' %}">Open</a>
+    <br>
+    <a class="filter" href={%  url 'business:cafe_status' 'close_cafe' %}>Close</a>
+    <ol style="--length: {{ cafes | length }}" role="list">
+    {% for cafe in cafes %}
+        {% if cafe.status == 'OP' %}
+        <li style="--i: {{ forloop.counter }}">
+        <h3>
+        <a href="{% url 'business:cafe_detail' cafe.id %}">{{ cafe.name }}</a>
+        </h3>
+        <p>{{ cafe.description | truncatewords:5 }}</p>
+        <img src="{{ cafe.images.first.image_file.url }}" alt="{{ cafe.images.first.title }}">
+        </li>
+        {%else %}
+            <li style="--i: {{ forloop.counter }}">
+        <h3>
+        <a href="{% url 'business:out_of_service' cafe.id %}">{{ cafe.name }}</a>
+        </h3>
+        <p>{{ cafe.description | truncatewords:5 }}</p>
+        <br>
+        <p>{{ cafe.status }}</p>
+        </li>
+        {% endif %}
+
+    {% endfor %}
+
+
+    </ol>
+    {% include 'partials/pagination.html' with page=page_obj %}
+
+
+{% endblock %}

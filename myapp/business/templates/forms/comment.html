@@ -1,14 +1,21 @@
 {% extends 'parent/base.html' %}
 {% load jformat %}
 {% block content %}
-    {% if comment %}
-        کامنت شما با موفقیت ثبت شد.
-        <a href="{{ cafe.get_absolute_url }}">بازگشت به کافه</a>
-        {% else %}
-        <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="افزودن کامنت">
-        </form>
-    {% endif %}
+{% if comment %}
+    <h3 style="margin-left: 50%">کامنت شما با موفقیت ثبت شد</h3>
+    <a style="margin-left: 53%" href="{{ cafe.get_absolute_url }}">بازگشت به کافه</a>
+{% else %}
+    تلاش مجدد
+    <a href="{{ cafe.get_absolute_url }}">بازگشت به کافه</a>
+{% endif %}
+{#    {% if comment %}#}
+{#        کامنت شما با موفقیت ثبت شد.#}
+{#        <a href="{{ cafe.get_absolute_url }}">بازگشت به کافه</a>#}
+{#        {% else %}#}
+{#        <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <input type="submit" value="افزودن کامنت">#}
+{#        </form>#}
+{#    {% endif %}#}
 {% endblock %}

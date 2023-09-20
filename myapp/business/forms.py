@@ -72,3 +72,7 @@ class CitiesForm(forms.ModelForm):
 class SearchForm(forms.Form):
     query = forms.CharField()
 
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, max_length=100, required=True)

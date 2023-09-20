@@ -75,11 +75,12 @@ class Comment(models.Model):
     body = models.TextField(verbose_name="متن کامنت")
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
     active = models.BooleanField(default=False, verbose_name="وضعیت")
+    # email = models.EmailField(verbose_name="ایمیل")
 
     class Meta:
-        ordering = ['created']
+        ordering = ['-created']
         indexes = [
-            models.Index(fields=['created'])
+            models.Index(fields=['-created'])
                    ]
         verbose_name = 'کامنت'
         verbose_name_plural = 'کامنت ها'
@@ -91,6 +92,7 @@ class Comment(models.Model):
 class ContactUs(models.Model):
     name = models.CharField(blank=True, max_length=250, verbose_name='نام و نام خانوادگی')
     email = models.EmailField(verbose_name='ایمیل آدرس')
+    subject = models.CharField(max_length=250, verbose_name='موضوع', default='')
     message = models.TextField(verbose_name='متن پیام')
 
     class Meta:
