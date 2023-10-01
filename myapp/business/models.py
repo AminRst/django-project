@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django_jalali.db import models as jmodels
+from django_resized import ResizedImageField
 
 
 # manager
@@ -21,6 +22,10 @@ class Cafe(models.Model):
     class Status(models.TextChoices):
         OPEN = 'OP', 'Open'
         CLOSE = 'CL', 'Close'
+
+    image_caption = models.CharField(max_length=100, default='Photo by Blog')
+    likes = models.ManyToManyField(User, related_name='like', default=None, blank=True)
+    like_count = models.BigIntegerField(default='0')
 
     # relations
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='costumer_cafe')
@@ -120,3 +125,22 @@ class Image(models.Model):
         ]
         verbose_name = 'تصویر'
         verbose_name_plural = 'تصویر ها'
+
+
+class Account(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='account', verbose_name='کاربر')
+    date_of_birth = models.DateField(verbose_name='تاریخ تولد', blank=True, null=True)
+    bio = models.TextField(verbose_name='بیوگرافی', blank=True, null=True)
+    photo = ResizedImageField(verbose_name='تصویر', upload_to='account_images/', size=[500, 500], quality=60,
+                              crop=['middle', 'center'], blank='True', null=True)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = 'حساب'
+        verbose_name_plural = 'حساب ها'
+
+
+class Like(models.Model):
+    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE)

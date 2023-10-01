@@ -6,7 +6,7 @@ from .models import *
 # Register your models here.
 @admin.register(Cafe)
 class CafeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'manager', 'publish', 'status', 'city']
+    list_display = ['name', 'manager', 'publish', 'status', 'city', 'like_count', 'get_likes']
     ordering = ['name', 'publish']
     list_filter = ['status', 'address', 'manager']
     search_fields = ['name', 'description']
@@ -14,6 +14,9 @@ class CafeAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     prepopulated_fields = {"slug": ['name']}
     list_editable = ['status', 'city']
+
+    def get_likes(self, obj):
+        return [likes.name for likes in obj.likes.all()]
 
 
 @admin.register(Ticket)
@@ -38,3 +41,12 @@ class ContactUsAdmin(admin.ModelAdmin):
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = ['cafe', 'title', 'created']
+
+
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ['user', 'date_of_birth', 'bio', 'photo']
+
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
+    list_display = ['cafe']

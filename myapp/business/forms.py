@@ -76,3 +76,45 @@ class SearchForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, required=True)
     password = forms.CharField(widget=forms.PasswordInput, max_length=100, required=True)
+
+
+class UserRegisterForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, required=True, max_length=250, label='password')
+    password2 = forms.CharField(widget=forms.PasswordInput, required=True, max_length=250, label='repeat password')
+
+    class Meta:
+        model = User
+        fields = ['email']
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Passwords do not match')
+        return cd['password2']
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields =['first_name', 'last_name', 'email']
+
+
+class UserEditAccount(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['date_of_birth', 'bio', 'photo']
+
+
+class CreateCafeForm(forms.ModelForm):
+    image1 = forms.ImageField(label='تصویر اول', required=False)
+    image2 = forms.ImageField(label='تصویر دوم', required=False)
+
+    class Meta:
+        model = Cafe
+        fields = ['name', 'description', 'city', 'address']
+
+
+# class ImageForm(forms.ModelForm):
+#     class Meta:
+#         model = Cafe
+#         fields = ['name', 'description', 'status', 'city', 'address']

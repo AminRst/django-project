@@ -1,6 +1,8 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 from . import views
+from django.urls import re_path
+
 
 app_name = 'business'
 urlpatterns = [
@@ -20,6 +22,14 @@ urlpatterns = [
     path('search/', views.cafe_search, name='cafe_search'),
     # path('images', views.image, name='images')
     path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
+    path('register/', views.register, name='register'),
+    path('account/edit', views.edit_account, name='edit_account'),
+    path('panel/', views.panel, name='panel'),
+    path('profile/edit_cafe/<cafe_id>', views.edit_cafe, name='edit_cafe'),
+    path('profile/create_cafe', views.create_cafe, name='create_cafe'),
+    path('profile/delete_image/<image_id>', views.delete_image, name='delete_image'),
+    path('like/', views.like, name='like'),
 
 ]
 
