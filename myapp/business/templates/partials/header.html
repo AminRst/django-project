@@ -98,9 +98,16 @@
 														</ul>
 													</li>
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" data-hash data-hash-offset="130" href="#demos">
-															دمو ها
+                                                        {% if cafe %}
+														<a class="dropdown-item dropdown-toggle" data-hash data-hash-offset="130" href="{% url 'business:menu' cafe.id %}">
+															منو
 														</a>
+                                                        {% else %}
+                                                        <a class="dropdown-item dropdown-toggle" data-hash data-hash-offset="130" href="#">
+															منو
+														</a>
+                                                        {% endif %}
+
 													</li>
 													<li class="dropdown dropdown-mega">
 														<a class="dropdown-item dropdown-toggle" href="elements.html">

@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django_jalali.db import models as jmodels
+# from django_jalali.db import models as jmodels
 from django_resized import ResizedImageField
 
 
@@ -80,13 +80,14 @@ class Comment(models.Model):
     body = models.TextField(verbose_name="متن کامنت")
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
     active = models.BooleanField(default=False, verbose_name="وضعیت")
+
     # email = models.EmailField(verbose_name="ایمیل")
 
     class Meta:
         ordering = ['-created']
         indexes = [
             models.Index(fields=['-created'])
-                   ]
+        ]
         verbose_name = 'کامنت'
         verbose_name_plural = 'کامنت ها'
 
@@ -144,3 +145,45 @@ class Account(models.Model):
 
 class Like(models.Model):
     cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'لایک'
+        verbose_name_plural = 'لایک ها'
+
+
+class Menu(models.Model):
+    cafe = models.OneToOneField(Cafe, on_delete=models.CASCADE, primary_key=True, verbose_name="کافه")
+
+    class Meta:
+        verbose_name = 'منو'
+        verbose_name_plural = 'منو ها'
+
+    def __str__(self):
+        return self.cafe.name
+
+
+class Section(models.Model):
+    name = models.CharField(max_length=50, verbose_name='دسته')
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='sections')
+
+    class Meta:
+        verbose_name = 'دسته بندی'
+        verbose_name_plural = 'دسته بندی ها'
+
+    def __str__(self):
+        return self.name
+
+
+class MenuItems(models.Model):
+    cafe = models.CharField(max_length=50, verbose_name='نام کافه', default=None, blank=True)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name='دسته بندی', related_name='section')
+    name = models.CharField(max_length=50, verbose_name='نام')
+    description = models.CharField(max_length=250, verbose_name='توضیحات', default=None, blank=True)
+    price = models.FloatField(verbose_name='قیمت')
+
+    class Meta:
+        verbose_name = 'گزینه منو'
+        verbose_name_plural = 'گزینه های منو'
+
+    def __str__(self):
+        return self.name

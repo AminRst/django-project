@@ -30,6 +30,7 @@ urlpatterns = [
     path('profile/create_cafe', views.create_cafe, name='create_cafe'),
     path('profile/delete_image/<image_id>', views.delete_image, name='delete_image'),
     path('like/', views.like, name='like'),
+    path('menu/<cafe_id>', views.menu_items_view, name='menu')
 
 ]
 

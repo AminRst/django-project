@@ -968,8 +968,8 @@
 							<div class="col-md-12 align-self-center p-static order-2 text-center">
 								<h1 class="text-dark font-weight-bold text-8">کافه {{ cafe.name }}</h1>
 								<span class="sub-title text-dark">آخرین اخبار ما را مطالعه کنید</span>
-							</div>
 
+							</div>
 
 							<div class="col-md-12 align-self-center order-1">
 
@@ -992,7 +992,7 @@
 									<div class="post-image ml-0" align="center">
 										<a href="detail1.html">
                                             {% for img in cafe.images.all %}
-											<img src="{{ img.image_file.url }}"  width="600px" height="300px"  class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-10" alt="{{ img.title }}">
+											<img src="{{ img.image_file.url }}"  width="400px" height="150px"  class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-10" alt="{{ img.title }}">
                                             {% endfor %}
                                         </a>
 									</div>
@@ -1005,7 +1005,11 @@
 									<div class="post-content ml-0">
 							
 										<h2 class="font-weight-bold mt-n3 mb-2 pb-1 pt-1 line-height-7 text-7"><a href="detail1.html"> کافه {{ cafe.name }}</a></h2>
-							
+							             <div class="row mb-0 mt-4 mt-sm-5">
+                                            <div class="col-lg-12 text-center">
+                                                <a href="{% url 'business:menu' cafe.id %}" class="btn btn-primary btn-lg mb-5">مشاهده منو</a>
+                                            </div>
+						                </div>
 										<div class="post-meta">
 											<span><i class="far fa-user"></i> توسط  <a href="#">{{ cafe.manager }}</a> </span>
 											<span><i class="far fa-folder"></i> <a href="#">سبک زندگی</a> , <a href="#">کافه گردی</a> </span>

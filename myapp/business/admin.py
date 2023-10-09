@@ -50,3 +50,18 @@ class AccountAdmin(admin.ModelAdmin):
 @admin.register(Like)
 class LikeAdmin(admin.ModelAdmin):
     list_display = ['cafe']
+
+
+@admin.register(Menu)
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ['cafe']
+
+
+@admin.register(Section)
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ['name', 'menu']
+
+
+@admin.register(MenuItems)
+class MenuItemsAdmin(admin.ModelAdmin):
+    list_display = ['section', 'name', 'description', 'price', 'cafe']

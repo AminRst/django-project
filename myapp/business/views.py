@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404, request
+from django.http import HttpResponse, Http404, request, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import TrigramSimilarity
 from django.views.generic import ListView, DetailView
@@ -14,11 +15,13 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from .forms import *
 from .urls import *
+import json
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'business/index.html')
+    cafes = Cafe.objects.all()
+    return render(request, 'business/index.html', {'cafes': cafes})
 
 
 # def cafe_list(request):
@@ -192,6 +195,26 @@ def user_login(request):
     return render(request, 'forms/login_page1.html', {'form': form})
 
 
+def user_logout(request):
+    logout(request)
+    return redirect(request.META.get("HTTP_REFERER", "login"))
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.username = form.cleaned_data['email']
+            user.save()
+            success_message = "ثبت نام شما با موفقیت انجام شد."
+
+            # Account.objects.create(user=user)
+            return render(request, 'forms/login_page1.html', {'success_message': success_message})
+    else:
+        form = UserRegisterForm()
+    return render(request, 'forms/login_page1.html', {'form': form})
 
 
 # def image(request):
@@ -203,3 +226,104 @@ def user_login(request):
 #     return render(request, "business/list.html", context)
 
 
+# @login_required()
+# def user_profile(request, manager_id, manager):
+#     cafes = Cafe.opened.filter(id=manager_id)
+#     user = User.objects.get(username=manager)
+#     return render(request, 'business/templates/registration/user-profile.html', {'cafes': cafes, 'user': user})
+
+
+@login_required
+def edit_account(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        account_form = UserEditAccount(request.POST, instance=request.user.account, files=request.FILES)
+        if account_form.is_valid() and user_form.is_valid():
+            account_form.save()
+            user_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+        account_form = UserEditAccount(instance=request.user.account)
+    context = {
+        'account_form': account_form,
+        'user_form': user_form,
+    }
+    return render(request, 'registration/user-profile.html', context)
+
+
+@login_required
+def panel(request):
+    cafes = Cafe.objects.filter(manager=request.user)
+    comment = Comment.objects.filter(active=True)
+    context = {
+        'cafes': cafes,
+        'comment': comment,
+    }
+    return render(request, 'business/panel.html', context)
+
+
+def edit_cafe(request, cafe_id):
+    cafe = get_object_or_404(Cafe, id=cafe_id)
+    if request.method == 'POST':
+        form = CreateCafeForm(request.POST, request.FILES, instance=cafe)
+        if form.is_valid():
+            cafe = form.save(commit=False)
+            cafe.manager = request.user
+            cafe.save()
+            if form.cleaned_data['image1']:
+                Image.objects.create(image_file=form.cleaned_data['image1'], cafe=cafe)
+            if form.cleaned_data['image2']:
+                Image.objects.create(image_file=form.cleaned_data['image2'], cafe=cafe)
+            return redirect(request.META.get('HTTP_REFERER'))
+
+    else:
+        form = CreateCafeForm(instance=cafe)
+    return render(request, 'forms/create-cafe.html', {'form': form, 'cafe': cafe})
+
+
+def create_cafe(request):
+    if request.method == 'POST':
+        form = CreateCafeForm(request.POST, request.FILES)
+        if form.is_valid():
+            cafe = form.save(commit=False)
+            cafe.manager = request.user
+            cafe.save()
+            if form.cleaned_data['image1']:
+                Image.objects.create(image_file=form.cleaned_data['image1'], cafe=cafe)
+            if form.cleaned_data['image2']:
+                Image.objects.create(image_file=form.cleaned_data['image2'], cafe=cafe)
+            return redirect('business:panel')
+    else:
+        form = CreateCafeForm()
+        return render(request, 'forms/create-cafe.html', {'form': form})
+
+
+def delete_image(request, image_id):
+    image = get_object_or_404(Image, id=image_id)
+    image.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def like(request):
+    print('***')
+    if request.method == 'GET':
+        cafe_id = 3
+        likedcafe = Cafe.objects.get(id=cafe_id)
+        m = Like(cafe=likedcafe)
+        m.save()
+        likedcafe.like_count += 1
+        likedcafe.save()
+        return HttpResponse('success')
+    else:
+        return HttpResponse("unsuccessful")
+
+
+def menu_items_view(request, cafe_id):
+    cafe = get_object_or_404(Cafe, id=cafe_id)
+    menu = Menu.objects.get(cafe=cafe)
+    sections = Section.objects.filter(menu=menu)
+    context = {
+        'cafe': cafe,
+        'sections': sections,
+    }
+    return render(request, 'business/cafe_menu.html', context)
