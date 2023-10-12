@@ -152,7 +152,9 @@ class Like(models.Model):
 
 
 class Menu(models.Model):
-    cafe = models.OneToOneField(Cafe, on_delete=models.CASCADE, primary_key=True, verbose_name="کافه")
+    cafe = models.OneToOneField(Cafe, on_delete=models.CASCADE, primary_key=True, verbose_name="کافه",
+                                related_name='menu')
+
 
     class Meta:
         verbose_name = 'منو'

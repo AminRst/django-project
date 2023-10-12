@@ -98,15 +98,38 @@
 														</ul>
 													</li>
 													<li class="dropdown">
-                                                        {% if cafe %}
-														<a class="dropdown-item dropdown-toggle" data-hash data-hash-offset="130" href="{% url 'business:menu' cafe.id %}">
+                                                        <li class="dropdown">
+														<a class="dropdown-item dropdown-toggle" href="#">
 															منو
 														</a>
-                                                        {% else %}
-                                                        <a class="dropdown-item dropdown-toggle" data-hash data-hash-offset="130" href="#">
-															منو
-														</a>
-                                                        {% endif %}
+														<ul class="dropdown-menu">
+															<li class="dropdown-submenu">
+																<a class="dropdown-item" href="#">دسته بندی ها براساس</a>
+																<ul class="dropdown-menu">
+{#																	<li><a class="dropdown-item" href="index-classic.html"></a></li>#}
+																	<li><a class="dropdown-item" href="{% url 'business:cafe_section' 'drinks' %}">نوشیدنی</a></li>
+																	<li><a class="dropdown-item" href="{% url 'business:cafe_section' 'food' %}">غذا</a></li>
+{#																	<li><a class="dropdown-item" href="index-classic-video.html">کلاسیک - ویدئو</a></li>#}
+{#																	<li><a class="dropdown-item" href="index-classic-video-light.html">کلاسیک - ویدئو - روشن</a></li>#}
+																</ul>
+															</li>
+															<li class="dropdown-submenu">
+																<a class="dropdown-item" href="#">تک صفحه</a>
+																<ul class="dropdown-menu">
+																	<li><a class="dropdown-item" href="index-one-page.html">تک صفحه اصلی</a></li>
+																</ul>
+															</li>
+														</ul>
+													</li>
+{#                                                        {% if cafe %}#}
+{#														<a class="dropdown-item dropdown-toggle" data-hash data-hash-offset="130" href="{% url 'business:menu' cafe.id %}">#}
+{#															منو#}
+{#														</a>#}
+{#                                                        {% else %}#}
+{#                                                        <a class="dropdown-item dropdown-toggle" data-hash data-hash-offset="130" href="#">#}
+{#															منو#}
+{#														</a>#}
+{#                                                        {% endif %}#}
 
 													</li>
 													<li class="dropdown dropdown-mega">

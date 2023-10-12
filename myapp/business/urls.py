@@ -13,7 +13,7 @@ urlpatterns = [
     path('cafe/<int:id>', views.cafe_detail, name='cafe_detail'),
     # path('cafe/<pk>', views.CafeDetailView.as_view(), name='cafe_detail'),
     path('ticket/', views.ticket, name='ticket'),
-    path('cafes/<str:status>', views.CafeListView.as_view(), name='cafe_status'),
+    # path('cafes/<str:status>', views.CafeListView.as_view(), name='cafe_status'),
     path('contact_us/', views.ContactUsView.as_view(), name='contact_us'),
     path('success/', views.SuccessView.as_view(), name='success'),
     path('cafes/<cafe_id>/', views.cafe_comment, name='cafe_comment'),
@@ -30,7 +30,8 @@ urlpatterns = [
     path('profile/create_cafe', views.create_cafe, name='create_cafe'),
     path('profile/delete_image/<image_id>', views.delete_image, name='delete_image'),
     path('like/', views.like, name='like'),
-    path('menu/<cafe_id>', views.menu_items_view, name='menu')
+    path('menu/<cafe_id>', views.menu_items_view, name='menu'),
+    path('cafes/<str:section>', views.CafeSectionView.as_view(), name='cafe_section'),
 
 ]
 

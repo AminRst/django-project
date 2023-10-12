@@ -327,3 +327,31 @@ def menu_items_view(request, cafe_id):
         'sections': sections,
     }
     return render(request, 'business/cafe_menu.html', context)
+
+
+class CafeSectionView(ListView):
+    def get_queryset(self):
+        section = self.kwargs.get('section')
+        if section == "drinks":
+            sec = Section.objects.filter(name__icontains='نوشیدنی')
+            print(sec)
+            lst = []
+            for i in sec:
+                lst.append(i.menu.cafe)
+            queryset = Cafe.objects.filter(name__in=lst)
+            return queryset
+        if section == "food":
+            sec = Section.objects.filter(name__icontains='فود')
+            print(sec)
+            lst = []
+            for i in sec:
+                lst.append(i.menu.cafe)
+            queryset = Cafe.objects.filter(name__in=lst)
+            return queryset
+        # else:
+        #     queryset = Cafe.objects.all()
+        #     return queryset
+
+    context_object_name = 'cafes'
+    paginate_by = 5
+    template_name = 'Business/list.html'
