@@ -29,7 +29,7 @@ urlpatterns = [
     path('profile/edit_cafe/<cafe_id>', views.edit_cafe, name='edit_cafe'),
     path('profile/create_cafe', views.create_cafe, name='create_cafe'),
     path('profile/delete_image/<image_id>', views.delete_image, name='delete_image'),
-    path('like/', views.like, name='like'),
+    path('like-cafe/', views.like_post, name='like_cafe'),
     path('menu/<cafe_id>', views.menu_items_view, name='menu'),
     path('cafes/<str:section>', views.CafeSectionView.as_view(), name='cafe_section'),
 

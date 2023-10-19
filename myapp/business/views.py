@@ -304,18 +304,29 @@ def delete_image(request, image_id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-def like(request):
-    print('***')
-    if request.method == 'GET':
-        cafe_id = 3
-        likedcafe = Cafe.objects.get(id=cafe_id)
-        m = Like(cafe=likedcafe)
-        m.save()
-        likedcafe.like_count += 1
-        likedcafe.save()
-        return HttpResponse('success')
+@login_required
+@require_POST
+def like_post(request):
+    cafe_id = request.POST.get('cafe_id')
+    if cafe_id is not None:
+        cafe = get_object_or_404(Cafe, id=cafe_id)
+        user = request.user
+
+        if user in cafe.likes.all():
+            cafe.likes.remove(user)
+            liked = False
+        else:
+            cafe.likes.add(user)
+            liked = True
+
+        cafe_likes_count = cafe.likes.count()
+        response_data = {
+            'liked': liked,
+            'likes_count': cafe_likes_count
+        }
     else:
-        return HttpResponse("unsuccessful")
+        response_data = {'error': 'Invalid cafe_id'}
+    return JsonResponse(response_data)
 
 
 def menu_items_view(request, cafe_id):

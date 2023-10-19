@@ -984,7 +984,7 @@
 
 				<div class="container py-4">
 
-					<div class="row">
+					<div class="cafe" data-cafe-id="{{ cafe.id }}">
 						<div class="col">
 							<div class="blog-posts single-post">
 							
@@ -1014,33 +1014,38 @@
 											<span><i class="far fa-user"></i> توسط  <a href="#">{{ cafe.manager }}</a> </span>
 											<span><i class="far fa-folder"></i> <a href="#">سبک زندگی</a> , <a href="#">کافه گردی</a> </span>
 											<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>
+                                            <span><i class="far fa-thumbs-up"></i><span class="likes-count">{{ cafe.likes.count }}</span></span>
 
-                                            <a class="likebutton" id="{{ cafe.id }}" href="{% url 'business:like' %}" data-catid="">Like</a>
-                                            <p id="message{{cafe.id}}">{{ cafe.like_count }}</p>
+                                            <button class="like-button" style="border: hidden; background-color: white; color: dodgerblue; outline-color: white; margin-right: 0px" >
+                                                {% if request.user in cafe.likes.all %}
+                                                    Unlike
+                                                {% else %}
+                                                    Like
+                                                {% endif %}
+                                            </button>
 
-                                            <script type="text/javascript">
-                                                $('.likebutton').click(function(){
-                                                    const id = $(this).attr("data-catid");
-
-                                                    $.ajax({
-                                                        type: "GET",
-                                                        url: "like",
-                                                        data: {
-                                                            cafe_id: 3
-                                                        },
-                                                        success: function(data) {
-                                                            // Assuming the server returns some data, you can handle it here
-                                                            console.log("Like successful!", data);
-
-                                                            // Update the UI with the new like count
-                                                            $('#message' + id).text(data.like_count);
-                                                        },
-                                                        error: function(error) {
-                                                            // Handle errors if the AJAX request fails
-                                                            console.error("Error:", error);
-                                                        }
+                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                                            <script>
+                                                $(document).ready(function(){
+                                                    $('.like-button').click(function(){
+                                                        var cafe_id = $(this).closest('.cafe').data('cafe-id');
+                                                        var button = $(this);
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '{% url 'business:like_cafe' %}',
+                                                            data: {'cafe_id': cafe_id, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                                                            success: function(data){
+                                                                if (data.liked){
+                                                                    button.text('Unlike');
+                                                                } else {
+                                                                    button.text('Like');
+                                                                }
+                                                                $('.likes-count').text(data.likes_count);
+                                                            },
+                                                        });
                                                     });
                                                 });
+
                                             </script>
 
 

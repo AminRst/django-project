@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django_jalali.admin.filters import JDateFieldListFilter
+from nested_admin.nested import NestedModelAdmin, NestedStackedInline, NestedTabularInline
 from .models import *
 
 
 # Register your models here.
 @admin.register(Cafe)
 class CafeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'manager', 'publish', 'status', 'city', 'like_count', 'get_likes']
+    list_display = ['name', 'manager', 'publish', 'status', 'city']
     ordering = ['name', 'publish']
     list_filter = ['status', 'address', 'manager']
     search_fields = ['name', 'description']
@@ -47,21 +48,28 @@ class ImageAdmin(admin.ModelAdmin):
 class AccountAdmin(admin.ModelAdmin):
     list_display = ['user', 'date_of_birth', 'bio', 'photo']
 
-@admin.register(Like)
-class LikeAdmin(admin.ModelAdmin):
-    list_display = ['cafe']
+
+# @admin.register(Like)
+# class LikeAdmin(admin.ModelAdmin):
+#     list_display = ['cafe']
 
 
-@admin.register(Menu)
-class MenuAdmin(admin.ModelAdmin):
-    list_display = ['cafe']
+# @admin.register(MenuItems)
+class MenuItemsAdmin(NestedTabularInline):
+    model = MenuItems
+    extra = 0
 
 
-@admin.register(Section)
-class MenuAdmin(admin.ModelAdmin):
-    list_display = ['name', 'menu']
+# @admin.register(Section)
+class SectionAdmin(NestedTabularInline):
+    model = Section
+    extra = 0
+    inlines = [MenuItemsAdmin, ]
 
 
-@admin.register(MenuItems)
-class MenuItemsAdmin(admin.ModelAdmin):
-    list_display = ['section', 'name', 'description', 'price', 'cafe']
+# @admin.register(Menu)
+class MenuAdmin(NestedModelAdmin):
+    inlines = [SectionAdmin, ]
+
+
+admin.site.register(Menu, MenuAdmin)

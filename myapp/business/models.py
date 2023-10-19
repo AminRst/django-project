@@ -24,8 +24,7 @@ class Cafe(models.Model):
         CLOSE = 'CL', 'Close'
 
     image_caption = models.CharField(max_length=100, default='Photo by Blog')
-    likes = models.ManyToManyField(User, related_name='like', default=None, blank=True)
-    like_count = models.BigIntegerField(default='0')
+    likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
 
     # relations
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='costumer_cafe')
@@ -177,7 +176,6 @@ class Section(models.Model):
 
 
 class MenuItems(models.Model):
-    cafe = models.CharField(max_length=50, verbose_name='نام کافه', default=None, blank=True)
     section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name='دسته بندی', related_name='section')
     name = models.CharField(max_length=50, verbose_name='نام')
     description = models.CharField(max_length=250, verbose_name='توضیحات', default=None, blank=True)
