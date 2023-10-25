@@ -1005,6 +1005,13 @@
 									<div class="post-content ml-0">
 							
 										<h2 class="font-weight-bold mt-n3 mb-2 pb-1 pt-1 line-height-7 text-7"><a href="detail1.html"> کافه {{ cafe.name }}</a></h2>
+                                        <div class="">
+                                            {% if request.user in cafe.saved_by.all %}
+                                                <button class="fa fa-bookmark" id="bookmark" style="border: hidden;font-size: 25px;  background-color: white; color: #ffc300; outline-color: white; margin-right: 0;" ></button>
+                                            {% else %}
+                                                <button class="fa fa-bookmark" id="bookmark" style="border: hidden; font-size: 25px; background-color: white; color: #9ea1a1; outline-color: white; margin-right: 0;" ></button>
+                                            {% endif %}
+                                        </div>
 							             <div class="row mb-0 mt-4 mt-sm-5">
                                             <div class="col-lg-12 text-center">
                                                 <a href="{% url 'business:menu' cafe.id %}" class="btn btn-primary btn-lg mb-5">مشاهده منو</a>
@@ -1014,38 +1021,70 @@
 											<span><i class="far fa-user"></i> توسط  <a href="#">{{ cafe.manager }}</a> </span>
 											<span><i class="far fa-folder"></i> <a href="#">سبک زندگی</a> , <a href="#">کافه گردی</a> </span>
 											<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>
-                                            <span><i class="far fa-thumbs-up"></i><span class="likes-count">{{ cafe.likes.count }}</span></span>
+{#                                            {% if request.user in cafe.likes.all %}#}
+{#                                                <span><i class="fa fa-heart" id="heart" style="font-size:15px;color:red;"></i><span class="likes-count">{{ cafe.likes.count }}</span></span>#}
+{#                                            {% else %}#}
+{#                                                <span><i class="fa fa-heart" id="heart" style="font-size:15px;color:rgb(128,128,128);"></i><span class="likes-count">{{ cafe.likes.count }}</span></span>#}
+{#                                            {% endif %}#}
 
-                                            <button class="like-button" style="border: hidden; background-color: white; color: dodgerblue; outline-color: white; margin-right: 0px" >
-                                                {% if request.user in cafe.likes.all %}
-                                                    Unlike
-                                                {% else %}
-                                                    Like
-                                                {% endif %}
-                                            </button>
+{#                                            <button class="like-button" style="border: hidden; background-color: white; color: dodgerblue; outline-color: white; margin-right: 0px" >#}
+{#                                                {% if request.user in cafe.likes.all %}#}
+{#                                                    Unlike#}
+{#                                                {% else %}#}
+{#                                                    Like#}
+{#                                                {% endif %}#}
+{#                                            </button>#}
+
+                                            {% if request.user in cafe.likes.all %}
+                                                <span><i><button class="fa fa-heart" id="like-button" style="border: hidden;font-size: 15px;  background-color: white; color: #ff0000; outline-color: white; margin-right: 0;" ></button></i><span class="likes-count">{{ cafe.likes.count }}</span></span>
+                                            {% else %}
+                                                <span><i><button class="fa fa-heart" id="like-button" style="border: hidden; font-size: 15px; background-color: white; color: #9ea1a1; outline-color: white; margin-right: 0;" ></button></i><span class="likes-count">{{ cafe.likes.count }}</span></span>
+                                            {% endif %}
+
 
                                             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                             <script>
                                                 $(document).ready(function(){
-                                                    $('.like-button').click(function(){
+                                                    $('#like-button').click(function(){
                                                         var cafe_id = $(this).closest('.cafe').data('cafe-id');
                                                         var button = $(this);
+
                                                         $.ajax({
                                                             type: 'POST',
                                                             url: '{% url 'business:like_cafe' %}',
                                                             data: {'cafe_id': cafe_id, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
                                                             success: function(data){
                                                                 if (data.liked){
-                                                                    button.text('Unlike');
+                                                                    button.css('color', 'red');
+                                                                    {#$('#heart').css('color', 'red');#}
+
                                                                 } else {
-                                                                    button.text('Like');
+                                                                    button.css('color', 'gray');
+                                                                    $('#heart').css('color', 'gray');
+
                                                                 }
                                                                 $('.likes-count').text(data.likes_count);
                                                             },
                                                         });
                                                     });
-                                                });
 
+                                                });
+                                                 $('#bookmark').click(function(){
+                                                    var button = $(this);
+
+                                                     $.ajax({
+                                                         type: 'POST',
+                                                         url: '{% url 'business:save_cafe' %}',
+                                                         data: {'cafe_id': {{ cafe.id }}, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                                                         success: function(data){
+                                                             if (data.saved){
+                                                                 button.css('color', '#ffc300')
+                                                             } else {
+                                                                 button.css('color', '#9ea1a1')
+                                                             }
+                                                         },
+                                                     });
+                                                });
                                             </script>
 
 
@@ -1055,12 +1094,12 @@
 											<h4 class="mb-3 secondary-font">به اشتراک گذاری این مطلب</h4>
 							
 											<!-- AddThis Button BEGIN -->
-											<div class="addthis_toolbox addthis_default_style ">
-												<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-												<a class="addthis_button_tweet"></a>
-												<a class="addthis_button_pinterest_pinit"></a>
-												<a class="addthis_counter addthis_pill_style"></a>
-											</div>
+{#											<div class="addthis_toolbox addthis_default_style ">#}
+{#												<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>#}
+{#												<a class="addthis_button_tweet"></a>#}
+{#												<a class="addthis_button_pinterest_pinit"></a>#}
+{#												<a class="addthis_counter addthis_pill_style"></a>#}
+{#											</div>#}
 											<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-50faf75173aadc53"></script>
 											<!-- AddThis Button END -->
 							
@@ -1258,78 +1297,78 @@
 
 			</div>
 
-			<footer id="footer">
-				<div class="container">
-					<div class="footer-ribbon">
-						<span>در ارتباط باشید</span>
-					</div>
-					<div class="row py-5 my-4">
-						<div class="col-md-6 col-lg-4 mb-4 mb-lg-0 pb-2 pb-lg-0">
-							<h5 class="text-3 mb-3">خبرنامه</h5>
-							<p class="pr-1">از آخرین ویژگی ها و به‌روزرسانی های ما با خبر شوید. ایمیل خود را وارد کرده و مشترک خبرنامه ما شوید.</p>
-							<div class="alert alert-success d-none" id="newsletterSuccess">
-								<strong>موفقیت!</strong> شما به لیست ایمیل ما افزوده شدید.
-							</div>
-							<div class="alert alert-danger d-none" id="newsletterError"></div>
-							<form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST" class="mr-md-4 mb-3">
-								<div class="input-group input-group-rounded">
-									<input class="form-control form-control-sm bg-light text-left" placeholder="آدرس ایمیل" dir="ltr" name="newsletterEmail" id="newsletterEmail" type="text">
-									<span class="input-group-append">
-										<button class="btn btn-light text-color-dark" type="submit"><strong>برو!</strong></button>
-									</span>
-								</div>
-							</form>
-						</div>
-						<div class="col-md-6 col-lg-3 mb-4 mb-lg-0 pb-2 pb-lg-0">
-							<h5 class="text-3 mb-3">جدیدترین توییت ها</h5>
-							<div id="tweet" class="twitter mb-2" data-plugin-tweets data-plugin-options="{'username': 'rtltheme', 'count': 2}">
-								<p class="mb-0">لطفا منتظر باشید ...</p>
-							</div>
-						</div>
-						<div class="col-md-6 col-lg-3 mb-4 mb-md-0 pb-2 pb-md-0">
-							<div class="contact-details">
-								<h5 class="text-3 mb-3">تماس با ما</h5>
-								<ul class="list list-icons list-icons-lg mb-2">
-									<li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">تبریز، فلکه دانشگاه، برج بلور، طبقه 456</p></li>
-									<li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567" class="ltr-text">(+98) 123-4567</a></p></li>
-									<li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-md-6 col-lg-2">
-							<h5 class="text-3 mb-3 pb-1">ما را دنبال کنید</h5>
-							<ul class="social-icons">
-								<li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-								<li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-								<li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="footer-copyright">
-					<div class="container py-2">
-						<div class="row py-4">
-							<div class="col-lg-1 d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0 mt-1 mt-lg-0">
-								<a href="index.html" class="logo pr-0 pr-lg-3">
-									<img alt="Porto Website Template" src="../../static/img/logo-footer.png" class="opacity-5" height="33">
-								</a>
-							</div>
-							<div class="col-lg-7 d-flex align-items-center justify-content-center justify-content-lg-start mb-4 mb-lg-0">
-								<p>ارائه شده در وب‌سایت راست‌چین</p>
-							</div>
-							<div class="col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-end">
-								<nav id="sub-menu">
-									<ul>
-										<li><i class="fas fa-angle-left"></i><a href="page-faq.html" class="ml-1 text-decoration-none"> سوالات متداول</a></li>
-										<li><i class="fas fa-angle-left"></i><a href="sitemap.html" class="ml-1 text-decoration-none"> نقشه سایت</a></li>
-										<li><i class="fas fa-angle-left"></i><a href="contact-us.html" class="ml-1 text-decoration-none"> تماس با ما</a></li>
-									</ul>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-			</footer>
+{#			<footer id="footer">#}
+{#				<div class="container">#}
+{#					<div class="footer-ribbon">#}
+{#						<span>در ارتباط باشید</span>#}
+{#					</div>#}
+{#					<div class="row py-5 my-4">#}
+{#						<div class="col-md-6 col-lg-4 mb-4 mb-lg-0 pb-2 pb-lg-0">#}
+{#							<h5 class="text-3 mb-3">خبرنامه</h5>#}
+{#							<p class="pr-1">از آخرین ویژگی ها و به‌روزرسانی های ما با خبر شوید. ایمیل خود را وارد کرده و مشترک خبرنامه ما شوید.</p>#}
+{#							<div class="alert alert-success d-none" id="newsletterSuccess">#}
+{#								<strong>موفقیت!</strong> شما به لیست ایمیل ما افزوده شدید.#}
+{#							</div>#}
+{#							<div class="alert alert-danger d-none" id="newsletterError"></div>#}
+{#							<form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST" class="mr-md-4 mb-3">#}
+{#								<div class="input-group input-group-rounded">#}
+{#									<input class="form-control form-control-sm bg-light text-left" placeholder="آدرس ایمیل" dir="ltr" name="newsletterEmail" id="newsletterEmail" type="text">#}
+{#									<span class="input-group-append">#}
+{#										<button class="btn btn-light text-color-dark" type="submit"><strong>برو!</strong></button>#}
+{#									</span>#}
+{#								</div>#}
+{#							</form>#}
+{#						</div>#}
+{#						<div class="col-md-6 col-lg-3 mb-4 mb-lg-0 pb-2 pb-lg-0">#}
+{#							<h5 class="text-3 mb-3">جدیدترین توییت ها</h5>#}
+{#							<div id="tweet" class="twitter mb-2" data-plugin-tweets data-plugin-options="{'username': 'rtltheme', 'count': 2}">#}
+{#								<p class="mb-0">لطفا منتظر باشید ...</p>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="col-md-6 col-lg-3 mb-4 mb-md-0 pb-2 pb-md-0">#}
+{#							<div class="contact-details">#}
+{#								<h5 class="text-3 mb-3">تماس با ما</h5>#}
+{#								<ul class="list list-icons list-icons-lg mb-2">#}
+{#									<li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">تبریز، فلکه دانشگاه، برج بلور، طبقه 456</p></li>#}
+{#									<li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567" class="ltr-text">(+98) 123-4567</a></p></li>#}
+{#									<li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>#}
+{#								</ul>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="col-md-6 col-lg-2">#}
+{#							<h5 class="text-3 mb-3 pb-1">ما را دنبال کنید</h5>#}
+{#							<ul class="social-icons">#}
+{#								<li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>#}
+{#								<li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>#}
+{#								<li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>#}
+{#							</ul>#}
+{#						</div>#}
+{#					</div>#}
+{#				</div>#}
+{#				<div class="footer-copyright">#}
+{#					<div class="container py-2">#}
+{#						<div class="row py-4">#}
+{#							<div class="col-lg-1 d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0 mt-1 mt-lg-0">#}
+{#								<a href="index.html" class="logo pr-0 pr-lg-3">#}
+{#									<img alt="Porto Website Template" src="../../static/img/logo-footer.png" class="opacity-5" height="33">#}
+{#								</a>#}
+{#							</div>#}
+{#							<div class="col-lg-7 d-flex align-items-center justify-content-center justify-content-lg-start mb-4 mb-lg-0">#}
+{#								<p>ارائه شده در وب‌سایت راست‌چین</p>#}
+{#							</div>#}
+{#							<div class="col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-end">#}
+{#								<nav id="sub-menu">#}
+{#									<ul>#}
+{#										<li><i class="fas fa-angle-left"></i><a href="page-faq.html" class="ml-1 text-decoration-none"> سوالات متداول</a></li>#}
+{#										<li><i class="fas fa-angle-left"></i><a href="sitemap.html" class="ml-1 text-decoration-none"> نقشه سایت</a></li>#}
+{#										<li><i class="fas fa-angle-left"></i><a href="contact-us.html" class="ml-1 text-decoration-none"> تماس با ما</a></li>#}
+{#									</ul>#}
+{#								</nav>#}
+{#							</div>#}
+{#						</div>#}
+{#					</div>#}
+{#				</div>#}
+{#			</footer>#}
 		</div>
 
 		<!-- Vendor -->

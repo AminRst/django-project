@@ -32,6 +32,9 @@ urlpatterns = [
     path('like-cafe/', views.like_post, name='like_cafe'),
     path('menu/<cafe_id>', views.menu_items_view, name='menu'),
     path('cafes/<str:section>', views.CafeSectionView.as_view(), name='cafe_section'),
+    path('save-cafe/', views.save_cafe, name='save_cafe'),
+    path('saved-cafes/', views.saved_cafes, name='saved_cafes'),
+    path('edit-menu/<cafe_id>', views.edit_menu, name='edit_menu')
 
 ]
 

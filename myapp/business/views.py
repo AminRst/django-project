@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.forms import modelformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404, request, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -236,6 +237,7 @@ def register(request):
 @login_required
 def edit_account(request):
     if request.method == 'POST':
+
         user_form = UserEditForm(request.POST, instance=request.user)
         account_form = UserEditAccount(request.POST, instance=request.user.account, files=request.FILES)
         if account_form.is_valid() and user_form.is_valid():
@@ -244,9 +246,12 @@ def edit_account(request):
     else:
         user_form = UserEditForm(instance=request.user)
         account_form = UserEditAccount(instance=request.user.account)
+    user = request.user
+    saved_cafes = user.saved_cafes.all()
     context = {
         'account_form': account_form,
         'user_form': user_form,
+        'saved_cafes': saved_cafes,
     }
     return render(request, 'registration/user-profile.html', context)
 
@@ -366,3 +371,88 @@ class CafeSectionView(ListView):
     context_object_name = 'cafes'
     paginate_by = 5
     template_name = 'Business/list.html'
+
+
+@login_required
+@require_POST
+def save_cafe(request):
+    cafe_id = request.POST.get('cafe_id')
+    if cafe_id is not None:
+        cafe = Cafe.objects.get(id=cafe_id)
+        user = request.user
+
+        if user in cafe.saved_by.all():
+            cafe.saved_by.remove(user)
+            saved = False
+        else:
+            cafe.saved_by.add(user)
+            saved = True
+        return JsonResponse({'saved': saved})
+
+    return JsonResponse({'error': 'Invalid Request'})
+
+
+def saved_cafes(request):
+    user = request.user
+    cafes = user.saved_cafes.all()
+    return render(request, 'business/saved-cafes.html', {'cafes': cafes})
+
+
+# @login_required
+# def edit_menu(request, cafe_id):
+#     cafe = get_object_or_404(Cafe, id=cafe_id)
+#     menu = Menu.objects.get(cafe=cafe)
+#     section = Section.objects.get(menu=menu)
+#     menu_items = MenuItems.objects.filter(section=section)
+#     if request.method == 'POST':
+#         section_form = EditSectionForm(request.POST, instance=section)
+#         MenuItemsFormSet = modelformset_factory(MenuItems, form=EditMenuItemsForm, queryset=menu_items)
+#         items_formset = MenuItemsFormSet(request.POST, queryset=menu_items)
+#         if section_form.is_valid() and items_form.is_valid():
+#             section_form.save()
+#             items_form.save()
+#
+#     # user = request.user
+#     else:
+#         section_form = EditSectionForm(instance=section)
+#         items_form = EditMenuItemsForm(queryset=menu_items)
+#
+#     context = {
+#         'cafe': cafe,
+#         'section_form': section_form,
+#         'items_form': items_form,
+#     }
+#     return render(request, 'forms/edit-menu.html', context)
+
+
+def edit_menu(request, cafe_id):
+    cafe = get_object_or_404(Cafe, id=cafe_id)
+    menu = Menu.objects.get(cafe=cafe)
+    section = Section.objects.get(menu=menu)
+    menu_items = MenuItems.objects.filter(section=section)
+
+    if request.method == 'POST':
+        section_form = EditSectionForm(request.POST, instance=section)
+        # Create a formset for menu items
+        MenuItemsFormSet = modelformset_factory(MenuItems, form=EditMenuItemsForm)
+        items_formset = MenuItemsFormSet(request.POST, queryset=menu_items)
+
+        if section_form.is_valid() and items_formset.is_valid():
+            section_form.save()
+            items_formset.save()
+            return redirect('business:panel')
+
+    else:
+        section_form = EditSectionForm(instance=section)
+        # Create a formset for menu items
+        MenuItemsFormSet = modelformset_factory(MenuItems, form=EditMenuItemsForm)
+        items_formset = MenuItemsFormSet(queryset=menu_items)
+
+
+    context = {
+        'cafe': cafe,
+        'section_form': section_form,
+        'items_formset': items_formset,  # Corrected variable name to reflect it's a formset
+    }
+    return render(request, 'forms/edit-menu.html', context)
+

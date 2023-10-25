@@ -25,6 +25,7 @@ class Cafe(models.Model):
 
     image_caption = models.CharField(max_length=100, default='Photo by Blog')
     likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
+    saved_by = models.ManyToManyField(User, related_name='saved_cafes')
 
     # relations
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='costumer_cafe')

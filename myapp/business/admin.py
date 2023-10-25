@@ -73,3 +73,4 @@ class MenuAdmin(NestedModelAdmin):
 
 
 admin.site.register(Menu, MenuAdmin)
+

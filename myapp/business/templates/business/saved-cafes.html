@@ -1,61 +1,16 @@
-<!DOCTYPE html>
-<html dir="rtl">
-	<head>
-
-		<!-- Basic -->
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">	
-
-		<title>پروفایل کاربر</title>	
-
-		<meta name="keywords" content="HTML5 Template">
-		<meta name="description" content="Porto - Responsive HTML5 Template">
-		<meta name="author" content="okler.net">
-
-		<!-- Favicon -->
-		<link rel="shortcut icon" href="../../static/img/favicon.ico" type="image/x-icon">
-		<link rel="apple-touch-icon" href="../../static/../../static/img/apple-touch-icon.png">
-
-		<!-- Mobile Metas -->
-		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-
-		<!-- Vendor CSS -->
-		<link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../../static/vendor/fontawesome-free/css/all.min.css">
-		<link rel="stylesheet" href="../../static/vendor/animate/animate.min.css">
-		<link rel="stylesheet" href="../../static/vendor/simple-line-icons/css/simple-line-icons.min.css">
-		<link rel="stylesheet" href="../../static/vendor/owl.carousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="../../static/vendor/owl.carousel/assets/owl.theme.default.min.css">
-		<link rel="stylesheet" href="../../static/vendor/magnific-popup/magnific-popup.min.css">
-
-		<!-- Theme CSS -->
-		<link rel="stylesheet" href="../../static/css/theme.css">
-		<link rel="stylesheet" href="../../static/css/theme-elements.css">
-		<link rel="stylesheet" href="../../static/css/theme-blog.css">
-		<link rel="stylesheet" href="../../static/css/theme-shop.css">
-		
-		<!-- Demo CSS -->
-
-
-		<!-- Skin CSS -->
-		<link rel="stylesheet" href="../../static/css/skins/default.css">
-
-		<!-- Theme Custom CSS -->
-		<link rel="stylesheet" href="../../static/css/custom.css">
-
-		<!-- Head Libs -->
-		<script src="../../static/vendor/modernizr/modernizr.min.js"></script>
-
-	</head>
+{% extends 'parent/base.html' %}
+{% block title %}cafe list{% endblock %}
+{% load cafe_tags %}
+{% block content %}
 	<body>
 
 		<div class="body">
 			<header id="header" class="header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 30, 'stickyHeaderContainerHeight': 70}">
-				<div class="header-body">
-					<div class="header-container container">
+				<div class="header-body border-top-0">
+					<div class="header-container container-fluid px-lg-4">
 						<div class="header-row">
-							<div class="header-column">
-								<div class="header-row">
+							<div class="header-column header-column-border-right flex-grow-0">
+								<div class="header-row pr-4">
 									<div class="header-logo">
 										<a href="index.html">
 											<img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" src="../../static/img/logo.png">
@@ -63,25 +18,30 @@
 									</div>
 								</div>
 							</div>
-							<div class="header-column justify-content-end">
+							<div class="header-column">
 								<div class="header-row">
-									<div class="header-nav header-nav-line header-nav-top-line header-nav-top-line-with-border order-2 order-lg-1">
+									<div class="header-nav header-nav-links justify-content-center">
 										<div class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">
-											<nav class="collapse">
+											<nav class="collapse header-mobile-border-top">
 												<ul class="nav nav-pills" id="mainNav">
 													<li class="dropdown">
-														<a class="dropdown-item dropdown-toggle" href="{% url 'business:index' %}">
+														<a class="dropdown-item dropdown-toggle" href="index.html">
 															خانه
 														</a>
-{#														<ul class="dropdown-menu">#}
+														<ul class="dropdown-menu">
+															<li>
+																<a class="dropdown-item" href="{% url 'business:index' %}">
+																	صفحه اول
+																</a>
+															</li>
+                                                            <li>
+																<a class="dropdown-item" href="{% url 'business:cafe_list' %}">
+																	لیست کافه ها
+																</a>
+															</li>
 {#															<li>#}
-{#																<a class="dropdown-item" href="{% url 'business:index' %}">#}
-{#																	صفحه اول#}
-{#																</a>#}
-{#															</li>#}
-{#															<li>#}
-{#																<a class="dropdown-item" href="index.html#demos">#}
-{#																	پیش‌نمایش ها#}
+{#																<a class="dropdown-item" href="{% url 'business:cafe_list' %}">#}
+{#																	لیست کافه ها#}
 {#																</a>#}
 {#															</li>#}
 {#															<li class="dropdown-submenu">#}
@@ -145,7 +105,7 @@
 {#																	<li><a class="dropdown-item" href="index-one-page.html">تک صفحه اصلی</a></li>#}
 {#																</ul>#}
 {#															</li>#}
-{#														</ul>#}
+														</ul>
 													</li>
 {#													<li class="dropdown dropdown-mega">#}
 {#														<a class="dropdown-item dropdown-toggle" href="elements.html">#}
@@ -159,7 +119,7 @@
 {#																			<span class="dropdown-mega-sub-title">عناصر 1</span>#}
 {#																			<ul class="dropdown-mega-sub-nav">#}
 {#																				<li><a class="dropdown-item" href="elements-accordions.html">لیست های باز شونده</a></li>#}
-{#																				<li><a class="dropdown-item" href="elements-toggles.html">لیست باز شونده</a></li>#}
+{#																				<li><a class="dropdown-item" href="elements-toggles.html">لیست باز شونده نوع 2</a></li>#}
 {#																				<li><a class="dropdown-item" href="elements-tabs.html">تب ها</a></li>#}
 {#																				<li><a class="dropdown-item" href="elements-icons.html">آیکن‌ها</a></li>#}
 {#																				<li><a class="dropdown-item" href="elements-icon-boxes.html">جعبه های آیکن</a></li>#}
@@ -221,15 +181,17 @@
 {#															</li>#}
 {#														</ul>#}
 {#													</li>#}
-{#													<li class="dropdown" >#}
-{#														<a class="dropdown-item dropdown-toggle" href="#">#}
-{#															ویژگی ها#}
-{#														</a>#}
-{#														<ul class="dropdown-menu">#}
-{#															<li class="dropdown-submenu">#}
-{#																<a class="dropdown-item" href="#">سرصفحه ها</a>#}
-{#																<ul class="dropdown-menu">#}
-{#																	<li><a class="dropdown-item" href="feature-headers-overview.html">نمای کلی</a></li>#}
+													<li class="dropdown">
+														<a class="dropdown-item dropdown-toggle" href="#">
+															منو
+														</a>
+														<ul class="dropdown-menu">
+															<li class="dropdown-submenu">
+																<a class="dropdown-item" href="#">دسته بندی ها براساس</a>
+																<ul class="dropdown-menu">
+																	<li><a class="dropdown-item" href="{% url 'business:cafe_section' 'drinks' %}">نوشیدنی</a></li>
+																	<li><a class="dropdown-item" href="{% url 'business:cafe_section' 'food' %}">غذا</a></li>
+
 {#																	<li class="dropdown-submenu">#}
 {#																		<a class="dropdown-item" href="#">کلاسیک</a>#}
 {#																		<ul class="dropdown-menu">#}
@@ -343,7 +305,7 @@
 {#																					<li><a class="dropdown-item" href="feature-headers-side-header-offcanvas-slide.html">اسلاید</a></li>#}
 {#																				</ul>#}
 {#																			</li>#}
-{#																			<li><a class="dropdown-item" href="feature-headers-side-header-narrow-bar.html">سرصفحه کناری نوار باریک</a></li>#}
+{#																			<li><a class="dropdown-item" href="feature-headers-side-header-narrow-bar.html">نوار کناری باریک</a></li>#}
 {#																		</ul>#}
 {#																	</li>#}
 {#																	<li><a class="dropdown-item" href="feature-headers-sign-in-sign-up.html">ورود / ثبت نام</a></li>#}
@@ -368,8 +330,8 @@
 {#																			<li><a class="dropdown-item" href="feature-headers-extra-background-color.html">پس زمینه رنگی</a></li>#}
 {#																		</ul>#}
 {#																	</li>#}
-{#																</ul>#}
-{#															</li>#}
+																</ul>
+															</li>
 {#															<li class="dropdown-submenu">#}
 {#																<a class="dropdown-item" href="#">فهرست ها</a>#}
 {#																<ul class="dropdown-menu">#}
@@ -452,7 +414,7 @@
 {#																			<li><a class="dropdown-item" href="feature-navigations-font-small.html">کوچک</a></li>#}
 {#																			<li><a class="dropdown-item" href="feature-navigations-font-medium.html">متوسط</a></li>#}
 {#																			<li><a class="dropdown-item" href="feature-navigations-font-large.html">بزرگ</a></li>#}
-{#																			<li><a class="dropdown-item" href="feature-navigations-font-alternative.html">دومین</a></li>#}
+{#																			<li><a class="dropdown-item" href="feature-navigations-font-alternative.html">فونت دوم</a></li>#}
 {#																		</ul>#}
 {#																	</li>#}
 {#																	<li class="dropdown-submenu">#}
@@ -690,10 +652,10 @@
 {#																	<li><a class="dropdown-item" href="feature-side-panel.html">پنل کناری</a></li>#}
 {#																</ul>#}
 {#															</li>#}
-{#														</ul>#}
-{#													</li>#}
+														</ul>
+													</li>
 {#													<li class="dropdown">#}
-{#														<a class="dropdown-item dropdown-toggle active" href="#">#}
+{#														<a class="dropdown-item dropdown-toggle" href="#">#}
 {#															صفحات#}
 {#														</a>#}
 {#														<ul class="dropdown-menu">#}
@@ -721,7 +683,7 @@
 {#																	<li><a class="dropdown-item" href="page-left-sidebar.html">نوار کناری چپ</a></li>#}
 {#																	<li><a class="dropdown-item" href="page-left-and-right-sidebars.html">نوار کناری چپ و راست</a></li>#}
 {#																	<li><a class="dropdown-item" href="page-sticky-sidebar.html">نوار کناری چسبان</a></li>#}
-{#																	<li><a class="dropdown-item" href="page-secondary-navbar.html">نوار ناوبری ثانویه</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-secondary-navbar.html">نوار کناری ثانویه</a></li>#}
 {#																</ul>#}
 {#															</li>#}
 {#															<li class="dropdown-submenu">#}
@@ -753,10 +715,16 @@
 {#															<li><a class="dropdown-item" href="page-custom-header.html">سرصفحه سفارشی</a></li>#}
 {#															<li><a class="dropdown-item" href="page-careers.html">فرصت های شغلی</a></li>#}
 {#															<li><a class="dropdown-item" href="page-faq.html">سوالات متداول</a></li>#}
-{#															<li><a class="dropdown-item" href="page-login.html">ورود / ثبت نام</a></li>#}
-{#															<li><a class="dropdown-item" href="page-user-profile.html">پروفایل کاربر</a></li>#}
+{#                                                            {% if request.user.is_authenticated %}#}
+{#                                                                <li><a class="dropdown-item" >ورود / ثبت نام</a></li>#}
+{#                                                            {% else %}#}
+{#                                                                <li><a class="dropdown-item" href="{% url 'business:login' %}">ورود / ثبت نام</a></li>#}
+{#                                                            {% endif %}#}
+{#															<li><a class="dropdown-item" href="{% url 'business:login' %}">ورود / ثبت نام</a></li>#}
+{#															<li><a class="dropdown-item" href="{% url 'business:edit_account' %}">پروفایل کاربر</a></li>#}
 {#														</ul>#}
 {#													</li>#}
+
 {#													<li class="dropdown">#}
 {#														<a class="dropdown-item dropdown-toggle" href="#">#}
 {#															نمونه‌کارها#}
@@ -837,7 +805,7 @@
 {#														</ul>#}
 {#													</li>#}
 {#													<li class="dropdown">#}
-{#														<a class="dropdown-item dropdown-toggle" href="#">#}
+{#														<a class="dropdown-item dropdown-toggle active" href="#">#}
 {#															بلاگ#}
 {#														</a>#}
 {#														<ul class="dropdown-menu">#}
@@ -963,192 +931,346 @@
 {#															<li><a class="dropdown-item" href="shop-checkout.html">پرداخت</a></li>#}
 {#														</ul>#}
 {#													</li>#}
+                                                    <li class="dropdown">
+														<a class="dropdown-item dropdown-toggle" href="#">
+															پنل
+														</a>
+														<ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="{% url 'business:edit_account' %}">پروفایل کاربر</a></li>
+                                                            <li><a class="dropdown-item" href="{% url 'business:panel' %}">پنل مدیریت</a></li>
+                                                            </li>
+                                                            <li class="dropdown-submenu">
+																<a class="dropdown-item" href="#">تماس با ما</a>
+																<ul class="dropdown-menu">
+{#																	<li><a class="dropdown-item" href="contact-us-advanced.php">تماس با ما - پیشرفته</a></li>#}
+																	<li><a class="dropdown-item" href="{% url 'business:contact_us' %}">تماس با ما</a></li>
+																	<li><a class="dropdown-item" href="{% url 'business:ticket' %}">ارسال تیکت</a></li>
+																</ul>
+															</li>
+
+
+{#															<li class="dropdown-submenu">#}
+{#																<a class="dropdown-item" href="#">طرح ها</a>#}
+{#																<ul class="dropdown-menu">#}
+{#																	<li><a class="dropdown-item" href="page-full-width.html">تمام عرض</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-right-sidebar.html">نوار کناری راست</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-left-sidebar.html">نوار کناری چپ</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-left-and-right-sidebars.html">نوار کناری چپ و راست</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-sticky-sidebar.html">نوار کناری چسبان</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-secondary-navbar.html">نوار ناوبری ثانویه</a></li>#}
+{#																</ul>#}
+{#															</li>#}
+															<li class="dropdown">
+                                                                <li><a class="dropdown-item" href="{% url 'business:login' %}">ورود / ثبت نام</a></li>
+{#																<ul class="dropdown-menu">#}
+{#																	<li><a class="dropdown-item" href="page-404.html">خطای 404</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-500.html">خطای 500</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-coming-soon.html">به زودی</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-maintenance-mode.html">حالت تعمیر</a></li>#}
+{#																	<li><a class="dropdown-item" href="page-search-results.html">نتایج جستجو</a></li>#}
+{#																	<li><a class="dropdown-item" href="sitemap.html">نقشه سایت</a></li>#}
+																</ul>
+															</li>
 												</ul>
 											</nav>
 										</div>
-										<button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav">
-											<i class="fas fa-bars"></i>
-										</button>
 									</div>
-									<div class="header-nav-features header-nav-features-no-border header-nav-features-lg-show-border order-1 order-lg-2">
-										<div class="header-nav-feature header-nav-features-search d-inline-flex">
-											<a href="#" class="header-nav-features-toggle" data-focus="headerSearch"><i class="fas fa-search header-nav-top-icon"></i></a>
-											<div class="header-nav-features-dropdown header-nav-features-dropdown-mobile-fixed" id="headerTopSearchDropdown">
-												<form role="search" action="page-search-results.html" method="get">
-													<div class="simple-search input-group">
-														<input class="form-control text-1" id="headerSearch" name="q" type="search" value="" placeholder="جستجو ...">
-														<span class="input-group-append">
-															<button class="btn" type="submit">
-																<i class="fa fa-search header-nav-top-icon"></i>
-															</button>
-														</span>
-													</div>
-												</form>
-											</div>
-										</div>
-									</div>
+								</div>
+							</div>
+							<div class="header-column header-column-border-left flex-grow-0 justify-content-center">
+								<div class="header-row pl-4 justify-content-end">
+									<ul class="header-social-icons social-icons d-none d-sm-block social-icons-clean m-0">
+										<li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+										<li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+										<li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+									</ul>
+									<button class="btn header-btn-collapse-nav ml-0 ml-sm-3" data-toggle="collapse" data-target=".header-nav-main nav">
+										<i class="fas fa-bars"></i>
+									</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</header>
+        <br>
+        <br>
+        <br>
 
-			<div role="main" class="main">
-				<section class="page-header page-header-classic">
+			<div  role="main" class="main">
+
+				<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
 					<div class="container">
-						<div class="row">
-							<div class="col">
-								<ul class="breadcrumb">
-									<li><a href="{% url 'business:index' %}">خانه</a></li>
-									<li class="active">صفحات</li>
-								</ul>
+						<div  class="row">
+							<div class="col-md-12 align-self-center p-static order-2 text-center">
+								<h1 class="text-dark font-weight-bold text-8">کافه های ما</h1>
+								<span class="sub-title text-dark">آخرین اخبار ما را مطالعه کنید</span>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col p-static mt-1 mb-n1">
-								<h1 data-title-border>پروفایل کاربر</h1>
+
+							<div class="col-md-12 align-self-center order-1">
+
+								<ul class="breadcrumb d-block text-center">
+									<li><a href="#">خانه</a></li>
+									<li class="active">بلاگ</li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</section>
-                <form role="form" class="needs-validation" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-				<div class="container py-2">
+
+				<div class="container py-4">
 
 					<div class="row">
-						<div class="col-lg-3 mt-4 mt-lg-0">
+						<div class="col">
+							<div class="blog-posts">
+								
+								<div class="masonry-loader masonry-loader-showing">
+									<div class="masonry row" data-plugin-masonry data-plugin-options="{'itemSelector': '.masonry-item'}">
+                                        {% for cafe in cafes %}
+										<div class="masonry-item no-default-style col-md-6 col-lg-4">
+											<article class="post post-medium border-0 pb-0 mb-5">
+												<div class="post-image">
+													<a href="{{ cafe.get_absolute_url }}">
+														<img src="{{ cafe.images.first.image_file.url }}" width="800px" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">
+													</a>
+												</div>
 
-							<div class="d-flex justify-content-center mb-4">
-								<div class="profile-image-outer-container">
-									<div class="profile-image-inner-container bg-color-primary">
-										<img src="{{ user.account.photo.url }}">
-										<span class="profile-image-button bg-color-dark">
-											<i class="fas fa-camera text-light"></i>
-										</span>
+												<div class="post-content">
+
+													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="{{ cafe.get_absolute_url }}">کافه {{ cafe.name }}</a></h2>
+													<p>{{ cafe.description | truncatewords:15 }}</p>
+
+													<div class="post-meta">
+														<span><i class="far fa-user"></i> توسط  <a href="#">{{ cafe.manager }}</a> </span>
+														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>
+                                                        {% if cafe.comments.count == 0 %}
+                                                        <span><i class="far fa-comments"></i> <a >{{ cafe.comments.count }} دیدگاه</a></span>
+                                                        {% else %}
+{#                                                        <span><i class="far fa-comments"></i> <a href="{% url 'business:cafe_detail' cafe.id %}">{{ cafe.comments.count }} دیدگاه</a></span>#}
+                                                        {% endif %}
+														<span class="d-block mt-2 pt-1"><a href="{{ cafe.get_absolute_url }}" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>
+													</div>
+
+												</div>
+											</article>
+										</div>
+                                        {% endfor %}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="{{ cafes.1.get_absolute_url }}">#}
+{#														<img src="{{ cafes.1.images.first.image_file.url }}" width="350px" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="{{ cafes.1.get_absolute_url }}">کافه {{ cafes.1.name }}</a></h2>#}
+{#													<p>{{ cafes.1.description }}</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">{{ cafes.1.manager }}</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">{{ cafes.1.comments.count }} دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="{{ cafes.1.description }}" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
+{##}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="blog-post.html">#}
+{#														<img src="../../static/img/blog/large/blog-3.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="blog-post.html">راه های بی نهایت</a></h2>#}
+{#													<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">جان اسنو</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
+{##}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="blog-post.html">#}
+{#														<img src="../../static/img/blog/medium/blog-4.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="blog-post.html">زندگی یک توسعه دهنده</a></h2>#}
+{#													<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">جسیکا آلبا</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
+{##}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="blog-post.html">#}
+{#														<img src="../../static/img/blog/square/blog-5.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="blog-post.html">آسمان آبی</a></h2>#}
+{#													<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">اولیور کویین</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
+{##}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="blog-post.html">#}
+{#														<img src="../../static/img/blog/wide/blog-6.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="blog-post.html">زندگی شب</a></h2>#}
+{#													<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">اولیور کویین</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
+{##}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="blog-post.html">#}
+{#														<img src="../../static/img/blog/large/blog-7.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="blog-post.html">یک دنیای دیگر</a></h2>#}
+{#													<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">جان اسنو</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
+{##}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="blog-post.html">#}
+{#														<img src="../../static/img/blog/medium/blog-8.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="blog-post.html">تیم خلاق</a></h2>#}
+{#													<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">اولیور کویین</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
+{##}
+{#										<div class="masonry-item no-default-style col-md-6 col-lg-4">#}
+{#											<article class="post post-medium border-0 pb-0 mb-5">#}
+{#												<div class="post-image">#}
+{#													<a href="blog-post.html">#}
+{#														<img src="../../static/img/blog/square/blog-9.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="">#}
+{#													</a>#}
+{#												</div>#}
+{##}
+{#												<div class="post-content">#}
+{##}
+{#													<h2 class="font-weight-semibold text-5 line-height-7 mt-3 mb-2 pt-1"><a href="blog-post.html">تنها در جنگل</a></h2>#}
+{#													<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و</p>#}
+{##}
+{#													<div class="post-meta">#}
+{#														<span><i class="far fa-user"></i> توسط  <a href="#">جان اسنو</a> </span>#}
+{#														<span><i class="far fa-folder"></i> <a href="#">اخبار</a>, <a href="#">طراحی</a> </span>#}
+{#														<span><i class="far fa-comments"></i> <a href="#">12 دیدگاه</a></span>#}
+{#														<span class="d-block mt-2 pt-1"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">بیشتر بخوانید</a></span>#}
+{#													</div>#}
+{##}
+{#												</div>#}
+{#											</article>#}
+{#										</div>#}
 									</div>
-									<input type="file" id="id_photo" name="photo" accept="image/*" class="profile-image-input">
 								</div>
-							</div>
-
-							<aside class="sidebar mt-2" id="sidebar">
-								<ul class="nav nav-list flex-column mb-5">
-									<li class="nav-item"><a class="nav-link text-dark active" href="#">پروفایل من</a></li>
-                                    <li class="nav-item"><a class="nav-link text-dark active" href="{% url 'business:saved_cafes' %}">کافه های ذخیره شده</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">تنظیمات کاربری</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">صورتحساب</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">فاکتور ها</a></li>
-								</ul>
-							</aside>
-
-						</div>
-						<div class="col-lg-9">
-
-							<div class="overflow-hidden mb-1">
-								<h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">پروفایل</strong> من</h2>
-							</div>
-							<div class="overflow-hidden mb-4 pb-3">
-								<p class="mb-0"></p>
-							</div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">نام</label>
-							        <div class="col-lg-9">
-							            <input class="form-control" required type="text" name="first_name" value="{{ user.first_name }}">
-							        </div>
-							    </div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">نام خانوادگی</label>
-							        <div class="col-lg-9">
-							            <input class="form-control" required type="text" name="last_name" value="{{ user.last_name }}">
-							        </div>
-							    </div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">ایمیل</label>
-							        <div class="col-lg-9">
-							            <input class="form-control text-left" required type="email" name="email" value="{{ user.email }}" dir="ltr">
-							        </div>
-							    </div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">بیوگرافی</label>
-							        <div class="col-lg-9">
-							            <input class="form-control text-left" required type="text" name="bio" id="id_bio" value="{{ user.account.bio }}" dir="ltr">
-                                        {{ account_form.errors }}
-							        </div>
-							    </div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">تاریخ تولد</label>
-							        <div class="col-lg-9">
-{#							            <input class="form-control text-left" type="text" name="date_of_birth" value="{{ user.account.date_of_birth }}" dir="ltr" >#}
-                                        <input class="form-control text-left" id="id_date_of_birth"  type="date" name="date_of_birth"
-                                               value="2019-03-10"
-                                               onfocus="(this.type='date')" onblur="(this.type='text')" dir="ltr">
-
-							        </div>
-							    </div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">آدرس</label>
-							        <div class="col-lg-9">
-							            <input class="form-control" type="text" value="" placeholder="خیابان">
-							        </div>
-							    </div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2"></label>
-							        <div class="col-lg-6">
-							            <input class="form-control" type="text" value="" placeholder="شهر">
-							        </div>
-							        <div class="col-lg-3">
-							            <input class="form-control" type="text" value="" placeholder="استان">
-							        </div>
-							    </div>
-							    <div class="form-group row">
-							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2">منطقه زمانی</label>
-							        <div class="col-lg-9">
-							            <select id="user_time_zone" class="form-control" size="0">
-							                <option value="Hawaii">(GMT-10:00) هاوایی</option>
-							                <option value="Alaska">(GMT-09:00) آلاسکا</option>
-							                <option value="Pacific Time (US & Canada)">(GMT-08:00) آمریکا و کانادا</option>
-							                <option value="Arizona">(GMT-07:00) آریزونا</option>
-							                <option value="Mountain Time (US & Canada)">(GMT-07:00) اقیانوسیه</option>
-							                <option value="Central Time (US & Canada)" selected>(GMT-06:00) استرالیا</option>
-							                <option value="Eastern Time (US & Canada)">(GMT-05:00) اروپا</option>
-							                <option value="Indiana (East)">(GMT-05:00) خاورمیانه</option>
-							            </select>
-							        </div>
-							    </div>
-{#							    <div class="form-group row">#}
-{#							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">نام کاربری</label>#}
-{#							        <div class="col-lg-9">#}
-{#							            <input class="form-control text-left" required type="text" value="" dir="ltr">#}
-{#							        </div>#}
-{#							    </div>#}
-{#							    <div class="form-group row">#}
-{#							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">رمز عبور</label>#}
-{#							        <div class="col-lg-9">#}
-{#							            <input class="form-control text-left" required type="password" value="" dir="ltr">#}
-{#							        </div>#}
-{#							    </div>#}
-{#							    <div class="form-group row">#}
-{#							        <label class="col-lg-3 font-weight-bold text-dark col-form-label form-control-label text-2 required">تایید رمز عبور</label>#}
-{#							        <div class="col-lg-9">#}
-{#							            <input class="form-control text-left" required type="password" value="" dir="ltr">#}
-{#							        </div>#}
-{#							    </div>#}
-							    <div class="form-group row">
-									<div class="form-group col-lg-9">
-										
+	
+								<div class="row">
+									<div class="col">
+                                        {% include 'partials/pagination.html' with page=page_obj %}
+										<ul class="pagination float-right">
+											<li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+											<li class="page-item active"><a class="page-link" href="#">1</a></li>
+											<li class="page-item"><a class="page-link" href="#">2</a></li>
+											<li class="page-item"><a class="page-link" href="#">3</a></li>
+											<li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+										</ul>
 									</div>
-									<div class="form-group col-lg-3">
-										<input type="submit" value="ذخیره" class="btn btn-primary btn-modern float-right" data-loading-text="در حال بارگذاری ...">
-									</div>
-							    </div>
-							</form>
+								</div>
 
+							</div>
 						</div>
+
 					</div>
 
 				</div>
 
 			</div>
+
 
 			<footer id="footer">
 				<div class="container">
@@ -1156,45 +1278,77 @@
 						<span>در ارتباط باشید</span>
 					</div>
 					<div class="row py-5 my-4">
-						<div class="col-md-6 col-lg-4 mb-4 mb-lg-0 pb-2 pb-lg-0">
-							<h5 class="text-3 mb-3">خبرنامه</h5>
-							<p class="pr-1">از آخرین ویژگی ها و به‌روزرسانی های ما با خبر شوید. ایمیل خود را وارد کرده و مشترک خبرنامه ما شوید.</p>
-							<div class="alert alert-success d-none" id="newsletterSuccess">
-								<strong>موفقیت!</strong> شما به لیست ایمیل ما افزوده شدید.
-							</div>
-							<div class="alert alert-danger d-none" id="newsletterError"></div>
-							<form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST" class="mr-md-4 mb-3">
-								<div class="input-group input-group-rounded">
-									<input class="form-control form-control-sm bg-light text-left" placeholder="آدرس ایمیل" dir="ltr" name="newsletterEmail" id="newsletterEmail" type="text">
-									<span class="input-group-append">
-										<button class="btn btn-light text-color-dark" type="submit"><strong>برو!</strong></button>
-									</span>
-								</div>
-							</form>
+						<div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+							<h5 class="text-3 mb-3">درباره بلاگ</h5>
+							<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها</p>
+							<p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه</p>
+							<p class="mb-0 mt-1"><a href="#" class="btn-flat btn-xs text-color-light p-relative top-5"><strong class="text-2">مشاهده بیشتر</strong><i class="fas fa-angle-left align-middle pl-2"></i></a></p>
 						</div>
-						<div class="col-md-6 col-lg-3 mb-4 mb-lg-0 pb-2 pb-lg-0">
-							<h5 class="text-3 mb-3">جدیدترین توییت ها</h5>
-							<div id="tweet" class="twitter mb-2" data-plugin-tweets data-plugin-options="{'username': 'rtltheme', 'count': 2}">
-								<p class="mb-0">لطفا منتظر باشید ...</p>
-							</div>
+						<div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
+							<h5 class="text-3 mb-3">مطالب اخیر</h5>
+							<ul class="list-unstyled mb-0">
+								<li class="media mb-3 pb-1">
+									<article class="d-flex">
+										<a href="#">
+											<img class="mr-3 rounded-circle" src="../../static/img/office/our-office-4-square.jpg" alt="" style="max-width: 70px;">
+										</a>
+										<div class="media-body">
+											<a href="#">
+												<h6 class="text-1em text-color-light opacity-8 ls-0 mb-1 primary-font">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+												<p class="text-2 mb-0">28 تیر 12:53 ق.ظ</p>
+											</a>
+										</div>
+									</article>
+								</li>
+								<li class="media">
+									<article class="d-flex">
+										<a href="#">
+											<img class="mr-3 rounded-circle" src="../../static/img/office/our-office-5-square.jpg" alt="" style="max-width: 70px;">
+										</a>
+										<div class="media-body">
+											<a href="#">
+												<h6 class="text-1em text-color-light opacity-8 ls-0 mb-1 primary-font">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+												<p class="text-2 mb-0">28 تیر 12:53 ق.ظ</p>
+											</a>
+										</div>
+									</article>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-6 col-lg-3 mb-4 mb-md-0 pb-2 pb-md-0">
-							<div class="contact-details">
-								<h5 class="text-3 mb-3">تماس با ما</h5>
-								<ul class="list list-icons list-icons-lg mb-2">
-									<li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i><p class="m-0">تبریز، فلکه دانشگاه، برج بلور، طبقه 456</p></li>
-									<li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i><p class="m-0"><a href="tel:8001234567" class="ltr-text">(+98) 123-4567</a></p></li>
-									<li class="mb-1"><i class="far fa-envelope text-color-primary"></i><p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>
-								</ul>
-							</div>
+						<div class="col-md-6 col-lg-3 mb-5 mb-md-0">
+							<h5 class="text-3 mb-3">دیدگاه‌های جدید</h5>
+							<ul class="list-unstyled mb-0">
+								<li class="mb-3 pb-1">
+									<a href="#">
+										<p class="text-1em text-color-light opacity-8 mb-1"><i class="fas fa-angle-left text-color-primary align-middle"></i><strong class="ml-2">جان اسنو</strong> دیدگاه در <strong class="text-color-primary">لورم ایپسوم متن ساختگی با تولید</strong></p>
+										<p class="text-2 mb-0">19 تیر - 12:55 ق.ظ</p>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<p class="text-1em text-color-light opacity-8 mb-1"><i class="fas fa-angle-left text-color-primary align-middle"></i><strong class="ml-2">جان اسنو</strong> دیدگاه در <strong class="text-color-primary">لورم ایپسوم متن ساختگی با تولید</strong></p>
+										<p class="text-2 mb-0">19 تیر - 12:55 ق.ظ</p>
+									</a>
+								</li>
+							</ul>
 						</div>
 						<div class="col-md-6 col-lg-2">
-							<h5 class="text-3 mb-3 pb-1">ما را دنبال کنید</h5>
-							<ul class="social-icons">
-								<li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-								<li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-								<li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
-							</ul>
+							<h5 class="text-3 mb-3">دسته‌بندی ها</h5>
+							<p>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">گجت ها</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">عکاسی</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">سبک زندگی</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">مد و زیبایی</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">دستور پخت</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">مسافرت</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">کسب و کار</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">معماری</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">نقد و بررسی ها</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">ورزشی</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">ویدئو ها</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">تکنولوژی</span></a>
+								<a href="#"><span class="badge badge-dark bg-color-black badge-sm py-2 mr-1 mb-2 text-uppercase">طراحی</span></a>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -1224,44 +1378,7 @@
 			</footer>
 		</div>
 
-		<!-- Vendor -->
-		<script src="../../static/vendor/jquery/jquery.min.js"></script>
-		<script src="../../static/vendor/jquery.appear/jquery.appear.min.js"></script>
-		<script src="../../static/vendor/jquery.easing/jquery.easing.min.js"></script>
-		<script src="../../static/vendor/jquery.cookie/jquery.cookie.min.js"></script>
-		<script src="../../static/vendor/popper/umd/popper.min.js"></script>
-		<script src="../../static/vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="../../static/vendor/common/common.min.js"></script>
-		<script src="../../static/vendor/jquery.validation/jquery.validate.min.js"></script>
-		<script src="../../static/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-		<script src="../../static/vendor/jquery.gmap/jquery.gmap.min.js"></script>
-		<script src="../../static/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
-		<script src="../../static/vendor/isotope/jquery.isotope.min.js"></script>
-		<script src="../../static/vendor/owl.carousel/owl.carousel.min.js"></script>
-		<script src="../../static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-		<script src="../../static/vendor/vide/jquery.vide.min.js"></script>
-		<script src="../../static/vendor/vivus/vivus.min.js"></script>
-		
-		<!-- Theme Base, Components and Settings -->
-		<script src="../../static/js/theme.js"></script>
 
-		<!-- Theme Custom -->
-		<script src="../../static/js/custom.js"></script>
-		
-		<!-- Theme Initialization Files -->
-		<script src="../../static/js/theme.init.js"></script>
-
-		<!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information.
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		
-			ga('create', 'UA-12345678-1', 'auto');
-			ga('send', 'pageview');
-		</script>
-		 -->
 
 	</body>
-</html>
+{% endblock %}

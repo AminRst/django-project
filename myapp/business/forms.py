@@ -118,3 +118,19 @@ class CreateCafeForm(forms.ModelForm):
 #     class Meta:
 #         model = Cafe
 #         fields = ['name', 'description', 'status', 'city', 'address']
+
+# class EditMenu(forms.ModelForm):
+#     class Meta:
+#         model = Menu
+#         fields = ['cafe']
+
+class EditSectionForm(forms.ModelForm):
+    class Meta:
+        model = Section
+        fields = ['name']
+
+
+class EditMenuItemsForm(forms.ModelForm):
+    class Meta:
+        model = MenuItems
+        fields = ['section', 'name', 'description', 'price']
