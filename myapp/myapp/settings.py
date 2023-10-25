@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'business.apps.BusinessConfig',
     'django_jalali',
+    'easy_thumbnails'
 
 ]
 
@@ -133,4 +134,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+THUMBNAIL_DEBUG = True
 
