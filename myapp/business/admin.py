@@ -1,10 +1,14 @@
 from django.contrib import admin
 from django_jalali.admin.filters import JDateFieldListFilter
 from nested_admin.nested import NestedModelAdmin, NestedStackedInline, NestedTabularInline
+from django.utils.translation import ngettext
+from django.contrib import messages
 from .models import *
+from django.contrib.admin.apps import AdminConfig
 
 
 # Register your models here.
+
 @admin.register(Cafe)
 class CafeAdmin(admin.ModelAdmin):
     list_display = ['name', 'manager', 'publish', 'status', 'city']
@@ -15,6 +19,35 @@ class CafeAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     prepopulated_fields = {"slug": ['name']}
     list_editable = ['status', 'city']
+    actions = ['make_open', 'make_close']
+
+    @admin.action(description='باز کردن کافه های انتخاب شده')
+    def make_open(self, request, queryset):
+        updated = queryset.update(status="OP")
+        self.message_user(
+            request,
+            ngettext(
+                "%d کافه با موفقیت باز شد.",
+                "%d کافه  با موفقیت باز شدند.",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    @admin.action(description='بستن  کافه های انتخاب شده')
+    def make_close(self, request, queryset):
+        updated = queryset.update(status="CL")
+        self.message_user(
+            request,
+            ngettext(
+                "%d کافه با موفقیت بسته شد.",
+                "%d کافه با موفقیت بسته شدند.",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
 
     def get_likes(self, obj):
         return [likes.name for likes in obj.likes.all()]
@@ -74,3 +107,6 @@ class MenuAdmin(NestedModelAdmin):
 
 admin.site.register(Menu, MenuAdmin)
 
+
+class MyAdminConfig(AdminConfig):
+    default_site = "admin_reorder.ReorderingAdminSite"

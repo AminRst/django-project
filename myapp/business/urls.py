@@ -34,7 +34,6 @@ urlpatterns = [
     path('cafes/<str:section>', views.CafeSectionView.as_view(), name='cafe_section'),
     path('save-cafe/', views.save_cafe, name='save_cafe'),
     path('saved-cafes/', views.saved_cafes, name='saved_cafes'),
-    path('edit-menu/<cafe_id>', views.edit_menu, name='edit_menu')
-
+    path('edit-menu/<cafe_id>', views.edit_menu, name='edit_menu'),
 ]
 

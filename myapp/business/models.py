@@ -143,18 +143,9 @@ class Account(models.Model):
         verbose_name_plural = 'حساب ها'
 
 
-class Like(models.Model):
-    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'لایک'
-        verbose_name_plural = 'لایک ها'
-
-
 class Menu(models.Model):
     cafe = models.OneToOneField(Cafe, on_delete=models.CASCADE, primary_key=True, verbose_name="کافه",
                                 related_name='menu')
-
 
     class Meta:
         verbose_name = 'منو'

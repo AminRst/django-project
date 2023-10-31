@@ -434,20 +434,19 @@ def edit_menu(request, cafe_id):
     if request.method == 'POST':
         section_form = EditSectionForm(request.POST, instance=section)
         # Create a formset for menu items
-        MenuItemsFormSet = modelformset_factory(MenuItems, form=EditMenuItemsForm)
+        MenuItemsFormSet = modelformset_factory(MenuItems, form=EditMenuItemsForm, extra=0)
         items_formset = MenuItemsFormSet(request.POST, queryset=menu_items)
 
         if section_form.is_valid() and items_formset.is_valid():
             section_form.save()
             items_formset.save()
-            return redirect('business:panel')
+            return redirect('business:edit_menu', cafe_id=cafe.id)
 
     else:
         section_form = EditSectionForm(instance=section)
         # Create a formset for menu items
-        MenuItemsFormSet = modelformset_factory(MenuItems, form=EditMenuItemsForm)
+        MenuItemsFormSet = modelformset_factory(MenuItems, form=EditMenuItemsForm, extra=0)
         items_formset = MenuItemsFormSet(queryset=menu_items)
-
 
     context = {
         'cafe': cafe,

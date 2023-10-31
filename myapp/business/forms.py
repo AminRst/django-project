@@ -133,4 +133,4 @@ class EditSectionForm(forms.ModelForm):
 class EditMenuItemsForm(forms.ModelForm):
     class Meta:
         model = MenuItems
-        fields = ['section', 'name', 'description', 'price']
+        fields = ['name', 'description', 'price']
