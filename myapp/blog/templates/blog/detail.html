@@ -1,0 +1,42 @@
+{% extends 'parent/base.html' %}
+{% block title %}Post Detail{% endblock %}
+{% load blog_tag %}
+{% block content %}
+    <h1>Post detail</h1>
+        <h2>{{ post.title }} ( by {{ post.author }})</h2>
+        <hr>
+        <p>{{ post.description | to_markdown | word_filtering:'fuck' }}</p>
+    <hr>
+    <div>
+    <img src="{{ post.images.all.0.image_file.url }}" alt="{{ img.title }}">
+    </div>
+{#    <div>#}
+{#        {% for img in post.images.all %}#}
+{#            <img src="{{ img.image_file.url }}" alt="{{ img.title }}">#}
+{#        {% endfor %}#}
+{#    </div>#}
+    <p>{{ post.publish }}</p>
+    <img src="{{ post.images.all.1.image_file.url }}" alt="{{ img.title }}">
+    <div>
+    {% with comments.count as cm_count %}
+        {{ cm_count }} comment {{ cm_count | pluralize }}
+    </div>
+    <div>
+    <img src="{{ post.images.all.2.image_file.url }}" alt="{{ img.title }}">
+            {% for cm in comments %}
+                {{ cm.body | linebreaks }}
+                <br>
+                {{ cm.name }}
+                {% empty %}
+                کامنتی وجود ندارد!
+            {% endfor %}
+    </div>
+        <img src="{{ post.images.all.3.image_file.url }}" alt="{{ img.title }}">
+    {% endwith %}
+
+    <form method="post" action="{% url 'blog:post_comment' post.id %}">
+       {% csrf_token %}
+       {{ form.as_p }}
+       <input type="submit" value="افزودن کامنت">
+       </form>
+{% endblock %}

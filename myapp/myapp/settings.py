@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'business.apps.BusinessConfig',
     'django_jalali',
     'easy_thumbnails',
+    'blog.apps.BlogConfig',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+import locale
+locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 
 TIME_ZONE = 'Asia/Istanbul'
 
@@ -164,7 +168,6 @@ ADMIN_REORDER = (
     #     {'model': 'auth.User', 'label': 'Staff'},
     # )},
 )
-
 
 JAZZMIN_SETTINGS: Dict[str, Any] = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
@@ -225,7 +228,7 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
     # List of apps to base side menu (app or model) ordering off of
-    "order_with_respect_to": ["business", "auth",],
+    "order_with_respect_to": ["business", "auth", ],
 
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
@@ -319,4 +322,35 @@ JAZZMIN_UI_TWEAKS = {
         "danger": "btn-outline-danger",
         "success": "btn-outline-success",
     },
+}
+# star ratings
+# STAR_RATINGS_RERATE = True
+STAR_RATINGS_STAR_HEIGHT = 24
+STAR_RATINGS_STAR_WIDTH = 24
+# STAR_RATINGS_ANONYMOUS = True
+STAR_RATINGS_CLEARABLE = True
+
+
+# Use Redis as the default cache backend
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/1',  # Update with your Redis server details
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#         }
+#     }
+# }
+# # Use Redis for session storage
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"
+#
+# # Use Redis for Django's cache framework
+# CACHE_TTL = 60 * 15  # Set the cache timeout as needed
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
 }

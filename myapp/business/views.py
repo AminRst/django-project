@@ -17,6 +17,8 @@ from .models import *
 from .forms import *
 from .urls import *
 import json
+import jdatetime
+from django.core.cache import cache
 
 
 # Create your views here.
@@ -24,6 +26,10 @@ def index(request):
     cafes = Cafe.objects.all()
     return render(request, 'business/index.html', {'cafes': cafes})
 
+
+def index_refresh(request, refresh):
+    cafes = Cafe.objects.all()
+    return render(request, 'business/index.html', {'cafes': cafes, 'refresh': refresh})
 
 # def cafe_list(request):
 #     cafes = Cafe.opened.all()
@@ -62,10 +68,29 @@ def cafe_detail(request, id):
     cafe = get_object_or_404(Cafe, id=id, status=Cafe.Status.OPEN)
     comments = cafe.comments.filter(active=True)
     form = CommentForm()
+    date = jdatetime.date.today()
+    month = jdatetime.date.j_months_fa[date.month-1]
+
+    def get_image(request, image_id):
+        key = f'image_{image_id}'
+        image_url = cache.get(key)
+
+        if image_url is None:
+            # Fetch image URL from your database or storage backend
+            # For example, if using the model from above:
+            image_url = cafe.objects.get(pk=image_id).image.url
+
+            # Store the image URL in the cache for future requests
+            cache.set(key, image_url)
+
+        return render(request, 'business/detail1.html', {'image_url': image_url})
+
     context = {
         'cafe': cafe,
         'form': form,
-        'comments': comments
+        'comments': comments,
+        'month': month,
+        'date': date,
     }
     return render(request, 'business/detail1.html', context)
 

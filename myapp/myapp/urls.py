@@ -24,5 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('business/', include('business.urls', namespace='business')),
     path('_nested_admin/', include('nested_admin.urls')),
+    path('blog/', include('blog.urls', namespace='blog')),
+    path('ratings/', include('star_ratings.urls', namespace='ratings')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

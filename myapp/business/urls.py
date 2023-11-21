@@ -1,12 +1,15 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 from . import views
-from django.urls import re_path
+
+from .templatetags import cafe_tags
 
 
 app_name = 'business'
 urlpatterns = [
     path('', views.index, name='index'),
+    path('business/<str:refresh>', views.index_refresh, name='index-refresh'),
+
     # path('cafe/', views.cafe_list, name='cafe_list'),
     path('cafes/', views.CafeListView.as_view(), name='cafe_list'),
     # path('cafes/<str:close_cafe>/', views.CafeListView.as_view(), name='cafe_close'),
@@ -35,5 +38,7 @@ urlpatterns = [
     path('save-cafe/', views.save_cafe, name='save_cafe'),
     path('saved-cafes/', views.saved_cafes, name='saved_cafes'),
     path('edit-menu/<cafe_id>', views.edit_menu, name='edit_menu'),
+    path('last-cafe-tag/<refresh>', cafe_tags.last_cafes, name='last_cafe_tag'),
+
 ]
 

@@ -1,0 +1,28 @@
+{% extends 'parent/base.html' %}
+{% block title %}Post List{% endblock %}
+{% load blog_tag %}
+{% block content %}
+    <h1>Post List</h1>
+    {% if category %}
+        <h1><a href="{% url 'blog:post_list' %}" >لیست پست های {{ category }}</a></h1>
+    {% else %}
+        <h1><a href="{% url 'blog:post_list' %}" >لیست پست ها</a></h1>
+    {% endif %}
+<ol style="--length: {{ posts | length }}" role="list">
+    {% for post in posts %}
+        <li style="--i: {{ forloop.counter }}">
+        <h3>
+{#        <a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a>#}
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        <br>
+        </h3>
+            <a href="{% url 'blog:user_profile' post.author.id post.author %}">نویسنده پست: {{ post.author }}</a>
+            <img src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}">
+        <p>{{ post.description | truncatewords:4 | word_filtering:'fuck' }}</p>
+        </li>
+    {% endfor %}
+{#<a href="{% url 'blog:post_list_category' 'تکنولوژی' %}">تکنولوژی</a>#}
+</ol>
+{#    {% include 'partials/pagination.html' with page=page_obj %}#}
+    {% include 'partials/pagination.html' with page=posts %}
+{% endblock %}

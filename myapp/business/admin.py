@@ -11,15 +11,15 @@ from django.contrib.admin.apps import AdminConfig
 
 @admin.register(Cafe)
 class CafeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'manager', 'publish', 'status', 'city']
+    list_display = ['name', 'manager', 'publish', 'status', 'city', 'refresh']
     ordering = ['name', 'publish']
     list_filter = ['status', 'address', 'manager']
     search_fields = ['name', 'description']
     raw_id_fields = ['manager']
     date_hierarchy = 'publish'
     prepopulated_fields = {"slug": ['name']}
-    list_editable = ['status', 'city']
-    actions = ['make_open', 'make_close']
+    list_editable = ['status', 'city', 'refresh']
+    actions = ['make_open', 'make_close', 'refresh']
 
     @admin.action(description='باز کردن کافه های انتخاب شده')
     def make_open(self, request, queryset):
@@ -46,6 +46,20 @@ class CafeAdmin(admin.ModelAdmin):
                 updated,
             )
             % updated,
+            messages.SUCCESS,
+        )
+
+    @admin.action(description='last cafes refresh')
+    def refresh(self, request, queryset):
+        refresh = queryset.update(refresh=True)
+        self.message_user(
+            request,
+            ngettext(
+                "%d کافه با موفقیت تازه سازی شد.",
+                "%d کافه ها با موفقیت تازه سازی شدند.",
+                refresh,
+            )
+            % refresh,
             messages.SUCCESS,
         )
 

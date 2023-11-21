@@ -36,6 +36,7 @@ class Cafe(models.Model):
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.CLOSE)
     city = models.CharField(max_length=25, choices=Cities.choices, default=Cities.SHIRAZ)
     address = models.CharField(max_length=100)
+    refresh = models.BooleanField(default=False)
     # data
     publish = models.DateTimeField(default=timezone.now)
     create = models.DateTimeField(auto_now_add=True)

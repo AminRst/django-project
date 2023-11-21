@@ -1,0 +1,16 @@
+{% extends 'parent/base.html' %}
+{% block title %}User Profile{% endblock %}
+{% block content %}
+    <h1> اطلاعات کاربر</h1>
+    <br>
+    <p>مشخصات کاربر</p>
+    <p>بیوگرافی: {{ user.account.bio }}</p>
+    <p>تاریخ تولد: {{ user.account.date_of_birth }}</p>
+    <p>شغل: {{ user.account.job }}</p>
+
+    <h2>پست های کاربر</h2>
+    {% for post in posts %}
+        <td><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> </td>
+        <br>
+    {% endfor %}
+{% endblock %}

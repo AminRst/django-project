@@ -1,0 +1,40 @@
+{% extends 'parent/base.html' %}
+{% load jformat %}
+{% block title %}New post{% endblock %}
+{% block content %}
+
+    {% if error %}
+        <br>
+        <h4>{{ error }}</h4>
+        <br>
+        <br>
+        <a class="new_post_back" href="{% url 'blog:new_post' %}">بازگشت به صفحه قبل</a>
+
+    {% else %}
+
+    <form method="post">
+    {% csrf_token %}
+        {% if user %}
+            <input lang="fa" class="user" type="text" value="کاربر: {{ user }}" disabled>
+        {% else %}
+            <input class="user" type="text" value="کاربر: ----- " disabled>
+        {% endif %}
+    <table>
+            {{ form.as_table }}
+    </table>
+    <button type="submit">ایجاد پست جدید</button>
+    </form>
+    {% if form.errors %}
+        لطفن خطاهای زیر را اصلاح کنید!
+        <br>
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors  %}
+                    {{ field.label }}: {{ error }}
+                    <br>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endif %}
+{% endblock %}

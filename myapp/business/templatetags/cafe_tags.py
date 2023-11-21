@@ -3,6 +3,8 @@ from ..models import Cafe, Comment
 from django.db.models import Count
 from django.utils.safestring import mark_safe
 from markdown import markdown
+from django.core.cache import cache
+
 
 register = template.Library()
 
@@ -34,8 +36,17 @@ def most_popular_cafes(count=6):
 
 
 @register.inclusion_tag('partials/last_cafe.html')
-def last_cafes(count=6):
-    l_cafes = Cafe.opened.order_by('-publish')[:count]
+def last_cafes(refresh, count=6):
+    if refresh == 'True':
+        l_cafes = Cafe.opened.order_by('-publish')[:count]
+        cache.set('last_cafes_result', l_cafes, 3600)
+        context = {
+            'l_cafes': l_cafes
+        }
+        return context
+    elif refresh == 'False':
+        l_cafes = cache.get('last_cafes_result')
+        cache.set('last_cafes_result', l_cafes, 3600)
     context = {
         'l_cafes': l_cafes
     }

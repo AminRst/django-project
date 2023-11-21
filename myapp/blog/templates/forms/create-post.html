@@ -1,0 +1,17 @@
+{% extends 'parent/base.html' %}
+{% block title %}create post{% endblock %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        {{ form.as_p }}
+        {% if post %}
+            {% for img in post.images.all %}
+                <img src="{{ img.image_file.url }}" alt="{{ im.title }}" width="300px" height="300px">
+                <a href="{% url 'blog:delete_image' img.id %}">حذف تصویر</a>
+            {% endfor %}
+        {% endif %}
+    <br>
+    <input type="submit" value="ایجاد">
+    </form>
+
+{% endblock %}

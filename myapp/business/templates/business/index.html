@@ -827,7 +827,7 @@
 {#															<li class="dropdown-submenu">#}
 {#																<a class="dropdown-item" href="#">توری</a>#}
 {#																<ul class="dropdown-menu">#}
-{#																	<li><a class="dropdown-item" href="blog-grid-4-columns.html">4 ستون</a></li>#}
+{#																	<li><a class="dropdown-item" href="list1.html">4 ستون</a></li>#}
 {#																	<li><a class="dropdown-item" href="blog-grid-3-columns.html">3 ستون</a></li>#}
 {#																	<li><a class="dropdown-item" href="blog-grid-full-width.html">تمام عرض</a></li>#}
 {#																	<li><a class="dropdown-item" href="blog-grid-no-margins.html">بدون فاصله</a></li>#}
@@ -1159,7 +1159,19 @@
                     <div class="col-md-6">
                         <h3 class="font-weight-bold text-5 mb-3 mt-5 mt-md-0">جدیدترین کافه ها</h3>
                         <ul>
-                        {% last_cafes %}
+                        {% if refresh %}
+                            {% last_cafes 'True' %}
+                        {% else %}
+                            {% last_cafes 'False' %}
+                        {% endif %}
+{#                        {% last_cafes %}#}
+                            {% if request.user.username == 'amin' %}
+                                <div class="mt-4 pt-2">
+                                    <a class="btn btn-primary" href="{% url 'business:index-refresh' 'True' %}">بروز رسانی لیست</a>
+{#                                <p>x{{ refresh }}</p>#}
+                                </div>
+                            {% else %}
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
