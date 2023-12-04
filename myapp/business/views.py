@@ -31,6 +31,7 @@ def index_refresh(request, refresh):
     cafes = Cafe.objects.all()
     return render(request, 'business/index.html', {'cafes': cafes, 'refresh': refresh})
 
+
 # def cafe_list(request):
 #     cafes = Cafe.opened.all()
 #     paginator = Paginator(cafes, 2)
@@ -60,7 +61,7 @@ class CafeListView(ListView):
             return queryset
 
     context_object_name = 'cafes'
-    paginate_by = 5
+    paginate_by = 6
     template_name = 'Business/list.html'
 
 
@@ -69,7 +70,7 @@ def cafe_detail(request, id):
     comments = cafe.comments.filter(active=True)
     form = CommentForm()
     date = jdatetime.date.today()
-    month = jdatetime.date.j_months_fa[date.month-1]
+    month = jdatetime.date.j_months_fa[date.month - 1]
 
     def get_image(request, image_id):
         key = f'image_{image_id}'
@@ -479,4 +480,3 @@ def edit_menu(request, cafe_id):
         'items_formset': items_formset,  # Corrected variable name to reflect it's a formset
     }
     return render(request, 'forms/edit-menu.html', context)
-

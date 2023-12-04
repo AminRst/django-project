@@ -977,7 +977,7 @@
 							<div class="col-md-8 col-lg-6 col-xl-5 custom-header-bar py-4 pr-md-5 appear-animation z-index-2" data-appear-animation="maskRight" data-appear-animation-delay="1200" data-appear-animation-duration="750">
 								<div class="appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="1500">
 									<div class="star-rating-wrap d-flex align-items-center justify-content-center position-relative text-dark text-5 py-2 mb-1">
-										<i class="fas fa-star"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i><i class="fas fa-star ml-1"></i>
+										<i class="fas fa-star "style="color: yellow"></i><i class="fas fa-star ml-1"style="color: yellow"></i><i class="fas fa-star ml-1"style="color: yellow"></i><i class="fas fa-star ml-1"style="color: yellow"></i><i class="fas fa-star ml-1"style="color: yellow"></i>
 									</div>
 
 									<h4 class="position-relative text-center font-weight-bold text-7 line-height-8 mb-1 primary-font">محبوب ترین وب سایت گردشگری</h4>
@@ -1164,11 +1164,9 @@
                         {% else %}
                             {% last_cafes 'False' %}
                         {% endif %}
-{#                        {% last_cafes %}#}
                             {% if request.user.username == 'amin' %}
                                 <div class="mt-4 pt-2">
                                     <a class="btn btn-primary" href="{% url 'business:index-refresh' 'True' %}">بروز رسانی لیست</a>
-{#                                <p>x{{ refresh }}</p>#}
                                 </div>
                             {% else %}
                             {% endif %}
