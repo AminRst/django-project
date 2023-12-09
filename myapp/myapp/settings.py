@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'blog.apps.BlogConfig',
     'star_ratings',
+    "shop.apps.ShopConfig"
 ]
 
 MIDDLEWARE = [

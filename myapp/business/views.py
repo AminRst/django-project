@@ -61,7 +61,7 @@ class CafeListView(ListView):
             return queryset
 
     context_object_name = 'cafes'
-    paginate_by = 6
+    paginate_by = 15
     template_name = 'Business/list.html'
 
 

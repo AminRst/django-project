@@ -26,5 +26,7 @@ urlpatterns = [
     path('_nested_admin/', include('nested_admin.urls')),
     path('blog/', include('blog.urls', namespace='blog')),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
+    path('shop/', include('shop.urls', namespace='shop')),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
