@@ -157,6 +157,8 @@ ADMIN_REORDER = (
                                                               'business.Ticket', 'business.Comment',
                                                               'business.ContactUs', 'Account')},
     {'app': 'business', 'label': 'مدیریت تصاویر', 'models': ('business.Image',)},
+    {'app': 'shop', 'label': 'مدیریت فروشگاه', 'models': ('shop.Category', 'shop.Product')},
+
     # Exclude models
     # {'app': 'auth', 'models': ('auth.User', )},
 
