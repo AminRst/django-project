@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+    <h2>Sign up</h2>
+    <form method="post">
+        {% csrf_token %}
+{#        <p>User name<input type="text" name="username"></p>#}
+        <p>Email<input type="text" name="username"></p>
+        <p>First name<input type="text" name="first_name"></p>
+        <p>Password<input type="password" name="password"></p>
+       <p>Reaped password<input type="password" name="password2"></p>
+        <p><input type="submit"></p>
+    </form>
+    <a href="{% url 'accounts:register' %}">ثبت نام با شماره تلفن</a>
+{% if form.errors %}
+        لطفن خطاهای زیر را اصلاح کنید!
+        <br>
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors  %}
+                    {{ field.label }}: {{ error }}
+                    <br>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
