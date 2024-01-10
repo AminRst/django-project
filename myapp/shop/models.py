@@ -30,6 +30,7 @@ class Product(models.Model):
     description = models.TextField(max_length=255, verbose_name='توضیحات')
     inventory = models.PositiveIntegerField(default=0, verbose_name='موجودی')
     price = models.PositiveIntegerField(default=0, verbose_name='قیمت')
+    weight = models.PositiveIntegerField(default=0, verbose_name='وزن')
     off = models.PositiveIntegerField(default=0, verbose_name='تخفیف')
     new_price = models.PositiveIntegerField(default=0, verbose_name='قیمت پس از تخفیف')
     created = jmodels.jDateTimeField(auto_now_add=True, verbose_name='زمان ایجاد')

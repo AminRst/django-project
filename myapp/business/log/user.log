@@ -1,0 +1,7 @@
+[2023/دسامبر/27 21:03:21] INFO [signals.py:11] amin login successful
+[2023/دسامبر/27 21:03:43] INFO [signals.py:26] amin log out successful
+[2023/دسامبر/27 21:04:35] ERROR [signals.py:20] login failed; unknown user
+[2023/دسامبر/27 21:07:19] ERROR [signals.py:20] None login failed
+[2023/دسامبر/27 21:09:32] INFO [signals.py:11] amin login successful
+[2023/دسامبر/28 06:13:27] INFO [signals.py:26] amin log out successful
+[2023/دسامبر/28 06:13:37] INFO [signals.py:11] amin login successful

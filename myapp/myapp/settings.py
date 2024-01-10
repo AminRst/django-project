@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import sys
 from pathlib import Path
 from typing import Any, Dict
 import os
+import logging.handlers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'blog.apps.BlogConfig',
     'star_ratings',
-    "shop.apps.ShopConfig"
+    "shop.apps.ShopConfig",
+    "cart.apps.CartConfig"
 ]
 
 MIDDLEWARE = [
@@ -122,6 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 import locale
+
 locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 
 TIME_ZONE = 'Asia/Istanbul'
@@ -333,7 +336,6 @@ STAR_RATINGS_STAR_WIDTH = 24
 # STAR_RATINGS_ANONYMOUS = True
 STAR_RATINGS_CLEARABLE = True
 
-
 # Use Redis as the default cache backend
 # CACHES = {
 #     'default': {
@@ -356,4 +358,58 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/var/tmp/django_cache',
     }
+}
+
+# ------------------------Logging----------------------
+LOG_PATH = r'\MyProject\django-project\myapp\business\log'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(filename)s:%(lineno)s] %(message)s",
+            'datefmt': "%Y/%b/%d %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            # 'level': 'DEBUG',
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'django': {
+            # 'level': 'DEBUG',
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(str(LOG_PATH), 'django.log'),
+            'maxBytes': (1024 * 1024 * 10),
+            'backupCount': 10,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',  # Set the encoding here
+        },
+        'user': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(str(LOG_PATH), 'user.log'),
+            'maxBytes': 1024 * 1024 * 10,
+            'backupCount': 10,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',  # Set the encoding here
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['django', 'console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+        'user': {
+            'handlers': ['user', 'console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
 }
