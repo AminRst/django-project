@@ -956,6 +956,18 @@
 												</ul>
 											</nav>
 										</div>
+                                    <div class="cart-container">
+                                        {% with item_count=cart|length %}
+                                        <a href="#" class="cart-link">
+                                            <div class="cart-info-container">
+                                                <span class="cart-icon">🛒</span>
+                                                <span class="cart-info">
+                                                    <span id="item_count" class="item-count">{{ item_count }}</span> items, <span id="total_price" class="total-price">{{ cart.get_total_price }}</span>
+                                                </span>
+                                            </div>
+                                        </a>
+                                        {% endwith %}
+                                    </div>
                                         {% if request.user.is_authenticated %}
 										<a class="btn btn-gradient btn-rounded font-weight-semibold px-4 ml-3 appear-animation" data-appear-animation="fadeIn" data-plugin-options="{'accY': 100}" href="#" target="_blank">{{ request.user.username }}</a>
                                         <a class="btn btn-gradient btn-rounded font-weight-semibold px-3 ml-3 appear-animation" data-appear-animation="fadeIn" data-plugin-options="{'accY': 100}" href="{% url 'business:logout' %}">خروج</a>

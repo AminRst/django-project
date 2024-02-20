@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
     <title>Like Post App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -14,7 +14,6 @@
         <p>
         <div type="text/css" class = "container">Author : {{ cafe.manager }}</div>
         <a class="likebutton btn btn-primary btn-lg" type="GET" id="like{{ post.id }}" href="#" data-catid="{{ post.id }}">Like</a><p id="message{{post.id}}"></p>
-</p>
 </div>
 {% endfor %}
 

@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<span class="cart-info">
+    {% with item_count=cart|length %}
+    <span id="item_count" class="item-count">{{ item_count }}</span> items, <span id="total_price" class="total-price">{{ cart.get_total_price }}</span>
+    {% endwith %}
+</span>

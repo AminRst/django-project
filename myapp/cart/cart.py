@@ -14,7 +14,8 @@ class Cart:
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 1, 'price': product.new_price, 'weight': product.weight}
         else:
-            self.cart[product_id]['quantity'] += 1
+            if self.cart[product_id]['quantity'] < product.inventory:
+                self.cart[product_id]['quantity'] += 1
         self.save()
 
     def decrease(self, product):
@@ -30,13 +31,13 @@ class Cart:
         self.save()
 
     def __len__(self):
-        return sum(item['quatity'] for item in self.cart.values())
+        return sum(item['quantity'] for item in self.cart.values())
 
     def clear(self):
         del self.session['cart']
         self.save()
 
-    def et_post_price(self):
+    def get_post_price(self):
         weight = sum(item['weight'] * item['quantity'] for item in self.cart.values())
         if weight < 1000:
             return 20000
