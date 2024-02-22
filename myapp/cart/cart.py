@@ -20,7 +20,7 @@ class Cart:
 
     def decrease(self, product):
         product_id = str(product.id)
-        if self.cart[product_id]['quantity'] > 0:
+        if self.cart[product_id]['quantity'] > 1:
             self.cart[product_id]['quantity'] -= 1
         self.save()
 
@@ -29,6 +29,9 @@ class Cart:
         if product_id in self.cart:
             del self.cart[product_id]
         self.save()
+
+    def get_final_price(self):
+        return self.get_total_price() + self.get_post_price()
 
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
@@ -57,6 +60,7 @@ class Cart:
         for product in products:
             cart_dict[str(product.id)]['product'] = product
         for item in cart_dict.values():
+            item['total'] = item['price'] * item['quantity']
             yield item
 
     def save(self):
