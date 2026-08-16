@@ -2,6 +2,7 @@
 <html>
 <body>
 	<center><h1>Hello , Welcome to my chat site ! {{request.user}}</h1></center>
+	<center><p>Room: <strong>{{ room_name }}</strong></p></center>
 	<br>
 	{% if request.user.is_authenticated %}
 	<center> Logout the chat Page <a href = "{% url 'logout-user' %}">Logout</a></center>
@@ -18,7 +19,11 @@
 	<br />
 	</div>
 	<script>
-	const chatSocket = new WebSocket("ws://" + window.location.host + "/");
+	const roomName = "{{ room_name|default:'general' }}";
+	const chatSocket = new WebSocket(
+		(window.location.protocol === "https:" ? "wss://" : "ws://")
+		+ window.location.host + "/ws/chat/" + roomName + "/"
+	);
 	chatSocket.onopen = function (e) {
 		console.log("The connection was setup successfully !");
 	};

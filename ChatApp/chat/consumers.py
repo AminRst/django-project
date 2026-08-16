@@ -4,7 +4,11 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.roomGroupName = "group_chat_gfg"
+        # Room name now comes from the WebSocket URL (see chat/routing.py)
+        # instead of being hardcoded, so multiple independent chat rooms
+        # can run at once.
+        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        self.roomGroupName = f"chat_{self.room_name}"
         await self.channel_layer.group_add(
             self.roomGroupName,
             self.channel_name
@@ -12,9 +16,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
+        # Bugfix: this used to pass self.channel_layer (the layer object)
+        # instead of self.channel_name (this connection's channel id) as the
+        # second argument, which raised an error whenever a client
+        # disconnected.
         await self.channel_layer.group_discard(
             self.roomGroupName,
-            self.channel_layer
+            self.channel_name
         )
 
     async def receive(self, text_data):

@@ -7,7 +7,8 @@
 - ثبت‌نام با فرم سفارشی (`UserRegisterForm`) و همچنین نسخه‌ی ثبت‌نام با ایمیل
 - ورود کاربر با `authenticate` + بررسی فعال بودن حساب (`is_active`)
 - صفحه‌ی پروفایل کاربر
-- استفاده از فرم‌های استاندارد Django به‌جای پیاده‌سازی دستی احراز هویت
+- اعتبارسنجی قدرت پسورد فعال است (حداقل طول، عدم شباهت به نام کاربری، رد پسوردهای رایج، غیرعددی بودن)
+- پوشش تست: ثبت‌نام موفق، ثبت‌نام با پسورد نامطابق، ورود موفق، ورود با پسورد اشتباه
 
 ## تکنولوژی‌ها
 
@@ -17,16 +18,25 @@
 ## راه‌اندازی محلی
 
 ```bash
-git clone https://github.com/AminRst/django-auth-system.git
-cd django-auth-system
+git clone https://github.com/AminRst/django-project.git
+cd django-project/Authentication
 python -m venv venv && source venv/bin/activate
-pip install django
+pip install -r requirements.txt
+
+cp .env.example .env
+# .env رو باز کن و SECRET_KEY رو تنظیم کن
+
 python manage.py migrate
 python manage.py runserver
 ```
 
-## نکاتی که بهتره قبل از نمایش اصلاح بشه
+اجرای تست‌ها:
+```bash
+python manage.py test accounts
+```
 
-- [ ] اضافه کردن `requirements.txt`
-- [ ] رمز عبور با `set_password` هش می‌شه که خوبه، ولی اعتبارسنجی قدرت پسورد (`AUTH_PASSWORD_VALIDATORS`) رو هم فعال/بررسی کنید
-- [ ] اضافه کردن تست‌های واقعی در `tests.py` (فایل فعلی خالیه)
+## کارهایی که برای حرفه‌ای‌سازی این ریپو انجام شد
+
+- **امنیت:** `SECRET_KEY` به متغیر محیطی منتقل شد (فایل نمونه `.env.example`).
+- **تست:** `accounts/tests.py` که قبلاً کاملاً خالی بود، الان ۵ تست واقعی داره (ثبت‌نام، هش شدن پسورد، تطابق پسوردها، ورود موفق/ناموفق).
+- `requirements.txt` اضافه شد.

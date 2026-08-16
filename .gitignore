@@ -12,15 +12,12 @@ db.sqlite3
 media/
 staticfiles/
 
+# Secrets — copy .env.example to .env and fill in real values locally
+.env
+
 # IDE
 .idea/
 .vscode/
 
 # OS
 .DS_Store
-
-# Project-specific bloat (see README for details)
-myapp/business/static/vendor/
-myapp/business/static/video/
-myapp/business/log/
-myapp/cafe_data.json

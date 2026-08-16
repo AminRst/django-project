@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 
 
-# Create your views here.
-def chat_page(request, *args, **kwargs):
+def chat_page(request, room_name="general"):
     if not request.user.is_authenticated:
         return redirect("login-user")
-    context = {}
+    context = {"room_name": room_name}
     return render(request, "chat/chatPage.html", context)
