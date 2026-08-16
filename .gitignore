@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+env/
+.venv/
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Project-specific bloat (see README for details)
+myapp/business/static/vendor/
+myapp/business/static/video/
+myapp/business/log/
+myapp/cafe_data.json
